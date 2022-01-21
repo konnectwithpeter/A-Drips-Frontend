@@ -1,0 +1,106 @@
+.wobble-hor-top {
+	-webkit-animation: wobble-hor-top 2s 3s infinite both;
+	animation: wobble-hor-top 2s 3s infinite both;
+}
+
+@-webkit-keyframes wobble-hor-top {
+	0%,
+	100% {
+		-webkit-transform: translateX(0%);
+		transform: translateX(0%);
+		-webkit-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;
+	}
+	15% {
+		-webkit-transform: translateX(-30px) rotate(6deg);
+		transform: translateX(-30px) rotate(6deg);
+	}
+	30% {
+		-webkit-transform: translateX(15px) rotate(-6deg);
+		transform: translateX(15px) rotate(-6deg);
+	}
+	45% {
+		-webkit-transform: translateX(-15px) rotate(3.6deg);
+		transform: translateX(-15px) rotate(3.6deg);
+	}
+	60% {
+		-webkit-transform: translateX(9px) rotate(-2.4deg);
+		transform: translateX(9px) rotate(-2.4deg);
+	}
+	75% {
+		-webkit-transform: translateX(-6px) rotate(1.2deg);
+		transform: translateX(-6px) rotate(1.2deg);
+	}
+}
+@keyframes wobble-hor-top {
+	0%,
+	100% {
+		-webkit-transform: translateX(0%);
+		transform: translateX(0%);
+		-webkit-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;
+	}
+	15% {
+		-webkit-transform: translateX(-30px) rotate(6deg);
+		transform: translateX(-30px) rotate(6deg);
+	}
+	30% {
+		-webkit-transform: translateX(15px) rotate(-6deg);
+		transform: translateX(15px) rotate(-6deg);
+	}
+	45% {
+		-webkit-transform: translateX(-15px) rotate(3.6deg);
+		transform: translateX(-15px) rotate(3.6deg);
+	}
+	60% {
+		-webkit-transform: translateX(9px) rotate(-2.4deg);
+		transform: translateX(9px) rotate(-2.4deg);
+	}
+	75% {
+		-webkit-transform: translateX(-6px) rotate(1.2deg);
+		transform: translateX(-6px) rotate(1.2deg);
+	}
+}
+
+.container-1 {
+	margin-top: 8rem;
+}
+.container-1 .swiper {
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 50px;
+	margin-bottom: 0;
+	height: 100%;
+	max-height: 100%;
+}
+
+.container-1 .swiper-slide {
+	background-position: center;
+	background-size: cover;
+	width: fit-content;
+	height: fit-content;
+	background-color: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+}
+
+.container-1 .swiper-button-next,
+.swiper-rtl .swiper-button-prev,
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+	color: black;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 100%;
+}
+
+.countBox {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 20px;
+}

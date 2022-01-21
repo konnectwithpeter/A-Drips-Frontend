@@ -1,24 +1,41 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "A+ Drips",
+  "name": "Aplus Drips",
+  "description": "The #1 resell/mtumba clothing store. Update and refresh your wardrobe with trendy clothes. Best resell/mtumba and brand new clothes for men, women at low price.",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/static/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "/static/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src": "logo512.png",
+        "src": "/static/icon-256x256.png",
+        "sizes": "256x256",
+        "type": "image/png"
+    },
+    {
+        "src": "/static/icon-384x384.png",
+        "sizes": "384x384",
+        "type": "image/png"
+    },
+    {
+        "src": "/static/logo.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    },
+    {
+      "src": "/static/logo.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose":"maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
