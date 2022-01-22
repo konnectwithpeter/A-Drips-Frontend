@@ -6,12 +6,18 @@ import "react-multi-carousel/lib/styles.css";
 import APIContext from "../../context/APIContext";
 import AddtoWish from "../../reusable/AddtoWish";
 
-let useStyles = makeStyles({
+let useStyles = makeStyles((theme) => ({
 	carousel: {
 		width: "100%",
-		minHeight: "50vh",
+		[theme.breakpoints.up("md")]: {
+			minHeight: "50vh",
+		},
+		[theme.breakpoints.down("md")]: {
+			height: "fit-content",
+		},
+		position: "relative",
 	},
-});
+}));
 
 const responsive = {
 	desktop: {
@@ -69,13 +75,13 @@ const ProductCarousel = ({ product, hght, wth }) => {
 					.map((image, index) =>
 						image === null ? null : (
 							<React.Fragment key={index}>
-								<AddtoWish slug={product.slug} />
+								<AddtoWish slug={product.slug} style={{left:'10%', top:'10%'}} />
 								<img
 									key={index}
 									style={{
-										height:hght || "auto",
+										height: hght || "auto",
 										maxHeight: "60vh",
-										width: wth||"60%",
+										width: wth || "60%",
 										objectFit: "",
 										display: "flex",
 										margin: "0 auto",

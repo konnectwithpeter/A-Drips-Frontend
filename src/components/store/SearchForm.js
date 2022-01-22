@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
-import { useLocation } from "react-router-dom";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import SearchContext from "../../context/SearchContext";
 
 const SearchForm = () => {
-	let location = useLocation()
 	let {
 		string,
 		items,
@@ -33,7 +31,7 @@ const SearchForm = () => {
 					placeholderColor: "gray",
 					fontFamily: "Quicksand",
 				}}
-				fuseOptions={{ keys: ["name", "category"] }}
+				fuseOptions={{ keys: ["name", "summary"] }}
 				items={string.length < 2 ? [] : items}
 				onSearch={handleOnSearch}
 				onHover={handleOnHover}

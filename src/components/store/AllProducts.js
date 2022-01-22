@@ -101,11 +101,6 @@ const AllProducts = () => {
 		}
 	};
 
-	// let handleChangeCategory = () => {
-	// 	getAllProducts();
-	// 	window.scroll(0, 0);
-	// };
-
 	return (
 		<div style={{ paddingBottom: "3em" }}>
 			<div style={{ marginBottom: "2em" }}>

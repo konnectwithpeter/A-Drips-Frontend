@@ -4,16 +4,19 @@ import {
 	SentimentSatisfied,
 	SentimentSatisfiedAlt,
 	SentimentVeryDissatisfied,
-	SentimentVerySatisfied
+	SentimentVerySatisfied,
 } from "@mui/icons-material";
 import {
-	Alert, Box, Chip,
-	Divider, List,
+	Alert,
+	Box,
+	Chip,
+	Divider,
+	List,
 	ListItem,
 	Paper,
 	Rating,
 	Snackbar,
-	Typography
+	Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import parse from "html-react-parser";
@@ -83,15 +86,13 @@ let useStyles = makeStyles((theme) => ({
 	price: {
 		fontSize: "20px",
 		[theme.breakpoints.down("sm")]: {
-			fontSize: "12px",
+			fontSize: "18px",
 		},
 		// fontWeight: "light-bold",
 	},
 	discount: {
 		fontSize: "12px",
-		[theme.breakpoints.down("sm")]: {
-			fontSize: "10px",
-		},
+		
 		// fontWeight: "light-bold",
 	},
 }));
@@ -196,29 +197,42 @@ const ProductItem = ({ product, imageLoading, reviews }) => {
 											style={{
 												display: "flex",
 												alignItems: "center",
+												gap: "1rem",
 											}}
 										>
-											<Typography
-												className={classes.discount}
-											>
-												<strike>
-													{Math.round(
-														product.price /
-															(1 -
-																product.discount /
-																	100)
-													).toLocaleString()}
-												</strike>
-											</Typography>
-											<Typography
-												className={classes.price}
-											>
-												{product.price.toLocaleString()}
-												<sup
-													style={{ fontSize: "10px" }}
+											<div	style={{
+												display: "flex",
+												alignItems: "center",
+												
+											}}>
+												<Typography
+													className={classes.discount}
 												>
-													Ksh
-												</sup>
+													<strike>
+														{Math.round(
+															product.price /
+																(1 -
+																	product.discount /
+																		100)
+														).toLocaleString()}
+													</strike>
+												</Typography>
+												<Typography
+													className={classes.price}
+												>
+													{product.price.toLocaleString()}
+													<sup
+														style={{
+															fontSize: "10px",
+														}}
+													>
+														Ksh
+													</sup>
+												</Typography>
+											</div>
+
+											<Typography style={{}}>
+												{product.discount}% OFF
 											</Typography>
 										</div>
 									) : (

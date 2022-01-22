@@ -20,7 +20,8 @@ let useStyles = makeStyles({
 	},
 });
 
-const AddtoWish = ({ slug }) => {
+const AddtoWish = (props) => {
+	let {slug, ...others} = props;
 	let classes = useStyles([]);
 	const [open, setOpen] = useState(false);
 	let { user } = useContext(AuthContext);
@@ -34,6 +35,7 @@ const AddtoWish = ({ slug }) => {
 		let bool = true;
 		setOpen(bool);
 	};
+
 
 	const addToWish = () => {
 		if (user.username === "guest") {
@@ -57,6 +59,7 @@ const AddtoWish = ({ slug }) => {
 			<Tooltip title="Add to wish list">
 				<IconButton
 					className={classes.wish}
+					{...others}
 					size="small"
 					onClick={() => addToWish()}
 				>
@@ -71,7 +74,7 @@ const AddtoWish = ({ slug }) => {
 				open={open}
 				autoHideDuration={3000}
 				onClose={handleClose}
-				style={{ textTransform: "none" }}
+				style={{ textTransform: "none", }}
 			>
 				<Alert
 					severity={severity}

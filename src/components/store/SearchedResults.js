@@ -1,14 +1,29 @@
 import { Grid } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import React, { useContext } from "react";
 import SearchContext from "../../context/SearchContext";
 import Custom from "../../reusable/Custom";
 
+let useStyles = makeStyles((theme) => ({
+	container: {
+		[theme.breakpoints.up("lg")]: {
+			flexDirection: "row",
+			maxWidth: "80rem",
+			padding: "0 auto",
+			margin: "0 auto",
+			marginBottom: "3rem",
+		},
+		maxWidth: "100%",
+	},
+}));
+
 const SearchedResults = () => {
 	let { results } = useContext(SearchContext);
+	let classes = useStyles();
 
 	return (
 		<div style={{ marginTop: "20px", zIndex: 1, minHeight: "90vh" }}>
-			<Grid container spacing={3} sx={{ flexDirection: "row" }}>
+			<Grid container spacing={3} className={classes.container}>
 				{results.map((product, index) => (
 					<Grid
 						item
