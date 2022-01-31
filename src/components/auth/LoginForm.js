@@ -2,7 +2,7 @@ import {
 	CloseRounded,
 	Login,
 	Visibility,
-	VisibilityOff
+	VisibilityOff,
 } from "@mui/icons-material";
 import {
 	Alert,
@@ -14,7 +14,7 @@ import {
 	InputAdornment,
 	Modal,
 	Paper,
-	Typography
+	Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
@@ -67,6 +67,7 @@ const LoginForm = (props) => {
 	let { loginUser, loginError, setLoginError, user, processingLogin } =
 		useContext(AuthContext);
 	const [open, setOpen] = useState(false);
+	const [afterSubmit, setAfterSubmit] = useState(false);
 	let [linkRequest, setLinkRequest] = useState(false);
 
 	const [values, setValues] = useState({
@@ -85,15 +86,17 @@ const LoginForm = (props) => {
 	};
 
 	let resetEmailRequest = async () => {
+		setAfterSubmit(true);
 		try {
 			await axios.post(`${API_URL}api/request-reset-email/`, {
 				email: values.resetEmail,
-				redirect_url: `${BASE_URL}#/reset-password/`,
+				redirect_url: `${BASE_URL}reset-password/`,
 			});
 			setLinkRequest(true);
 		} catch (err) {
 			setLinkRequest(true);
 		}
+		//setAfterSubmit(false)
 	};
 
 	const handleChange = (prop) => (event) => {
@@ -122,19 +125,20 @@ const LoginForm = (props) => {
 		closeLoginPopup();
 	}, [user]);
 
-	const goToPreviousPath=()=>{navigate(-1)}
+	const goToPreviousPath = () => {
+		navigate(-1);
+	};
 
 	const handleLogin = async () => {
 		await loginUser(values);
-		if (!loginError && location.pathname === "/login") {
-			goToPreviousPath();
-		}
+		console.log(loginError)
+		
 	};
 
 	return (
 		<div className={classes.container}>
 			<div className={classes.box} align="center">
-				<Paper elevation={8} style={{ width: "100%", m:0 }}>
+				<Paper elevation={8} style={{ width: "100%", m: 0 }}>
 					{location.pathname === "/login" ? null : (
 						<div
 							style={{
@@ -149,9 +153,15 @@ const LoginForm = (props) => {
 						</div>
 					)}
 
-					{loginError === false ? null : (
-						<Alert severity="error">Wrong email or password.</Alert>
+					{loginError && (
+						<Alert severity="error" sx={{ margin: "1rem"}}>Wrong email or password.</Alert>
 					)}
+					<br />
+					<Typography
+						sx={{ fontSize: "20px", fontWeight: "light-bold" }}
+					>
+						Log in
+					</Typography>
 					<br />
 					<ValidatorForm
 						style={{ margin: 0, padding: 0 }}
@@ -237,10 +247,12 @@ const LoginForm = (props) => {
 						<br />
 					</ValidatorForm>
 					<Typography style={{ marginBottom: "1em" }}>
-						Forgot password?{" "}
+						Forgot password?
 						<Button
 							style={{ textTransform: "none" }}
-							onClick={() => handleOpen()}
+							onClick={
+								(() => {handleOpen(); setAfterSubmit(false)})
+							}
 						>
 							Click here to reset.
 						</Button>
@@ -305,6 +317,7 @@ const LoginForm = (props) => {
 									color="primary"
 									style={{ minWidth: "50%" }}
 									component={Button}
+									disabled={afterSubmit}
 									type="submit"
 								/>
 							) : null}

@@ -4,7 +4,7 @@ import {
 	ArrowForwardRounded,
 	CancelPresentation,
 	CloseRounded,
-	RemoveCircleOutline
+	RemoveCircleOutline,
 } from "@mui/icons-material";
 import {
 	Alert,
@@ -21,7 +21,8 @@ import {
 	List,
 	ListItem,
 	Modal,
-	Typography
+	Paper,
+	Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
@@ -45,6 +46,17 @@ let useStyles = makeStyles((theme) => ({
 		color: "black",
 		[theme.breakpoints.down("sm")]: {
 			fontSize: "13px",
+		},
+		textDecoration: "underline",
+	},
+	container: {
+		width: "100%",
+		[theme.breakpoints.down("md")]: {
+			maxWidth: "100%",
+			marginTop:"2rem",
+		},
+		[theme.breakpoints.up("md")]: {
+			width: "100%",
 		},
 	},
 }));
@@ -106,7 +118,7 @@ const CheckoutCart = () => {
 		<Custom.PageLoadingBuffer />
 	) : (
 		<>
-			<Box style={{ maxWidth: "42em", margin: "auto" }}>
+			<Box className={classes.container}>
 				<Box>
 					<div
 						style={{
@@ -114,233 +126,226 @@ const CheckoutCart = () => {
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "space-between",
-							paddingBottom: "1em",
-							paddingLeft: "1em",
-							paddingRight: "1em",
-							marginBottom: "1rem",
+							marginBottom: "1.5rem",
 						}}
 					>
 						<Typography variant="h6">Cart</Typography>
-						<Button
-							variant="outlined"
-							sx={{ textTransform: "none", marginRight: "2rem" }}
-							onClick={() => navigate("/shop")}
-							startIcon={<ArrowBackRounded />}
+						<Typography
+							variant="subtitle1"
+							style={{
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+								color: "black",
+								gap: "1rem",
+								//textDecoration:"none",
+							}}
+							component={Link}
+							to={"/store"}
 						>
+							<ArrowBackRounded fontSize="inherit"/>
 							Continue Shopping
-						</Button>
+						</Typography>
 					</div>
-					<Divider sx={{ marginBottom: "1.5rem" }} />
+
 					{items.map((item, index) =>
 						item.quantity === undefined ||
 						item.quantity === null ? null : (
-							<div
-								style={{
-									width: "100%",
-									marginBottom: "2em",
-									borderRadius: "5px 20px 5px",
-									borderBottom: "1px solid gray",
-									borderRight: "1px solid gray",
-								}}
+							<Paper
 								key={index}
+								sx={{
+									display: "flex",
+									maxHeight: 150,
+									flexShrink: 3,
+									width: "100%",
+									marginBottom: "2rem",
+								}}
+								elevation={1}
 							>
 								<Box
 									sx={{
-										display: "flex",
-										maxHeight: 150,
-										flexShrink: 3,
-										width: "100%",
+										backgroundColor: "",
+
+										//borderBottom:'1px solid gray',
+										objectFit: "cover",
+										width: "35%",
 									}}
 								>
-									<Box
+									<CardMedia
+										component="img"
 										sx={{
-											backgroundColor: "",
-
-											//borderBottom:'1px solid gray',
-											objectFit: "cover",
-											width: "35%",
+											width: "auto",
+											height: 150,
+											
 										}}
-									>
-										<CardMedia
-											component="img"
-											sx={{
-												width: "auto",
-												height: 150,
-												borderRadius: "5px 20px 5px",
-											}}
-											src={
-												item.image1.slice(0, 4) ===
-												"http"
-													? `${item.image1}`
-													: `${API_URL}${item.image1.slice(
-															1
-													  )}`
-											}
-											alt={item.name}
-										/>
-									</Box>
-									<Box
-										sx={{
-											display: "flex",
-											flexDirection: "column",
-											flex: 1,
-											//borderBottom: "1px solid gray",
-											//borderRight: "1px solid gray",
-											borderRadius: "5px 20px 5px",
-										}}
-									>
-										<CardContent sx={{ paddingTop: 0 }}>
-											<Grid
-												container
-												sx={{
-													display: "flex",
-													alignItems: "center",
-													justifyContent:
-														"space-between",
-												}}
-											>
-												<Grid item xs={6} sm={6} md={6}>
-													<Typography
-														component={Link}
-														to={`/product/${item.slug}`}
-														className={classes.name}
-													>
-														{item.name}
-													</Typography>
-												</Grid>
-												<Grid item xs={4} sm={4} md={4}>
-													<Chip
-														sx={{
-															backgroundColor:
-																"#F7F7F7",
-														}}
-														size="small"
-														label={
-															<Typography variant="subtitle2">
-																@
-																{item.price.toLocaleString()}
-																<sup
-																	style={{
-																		fontSize:
-																			"10px",
-																	}}
-																>
-																	Ksh
-																</sup>
-															</Typography>
-														}
-													/>
-												</Grid>
-												<Grid item xs={2} sm={2} md={2}>
-													<IconButton
-														size="large"
-														onClick={() =>
-															removeItem(item.id)
-														}
-													>
-														<CancelPresentation
-															fontSize="inherit"
-															color="error"
-														/>
-													</IconButton>
-												</Grid>
-											</Grid>
-
-											<div style={{ display: "flex" }}>
-												<Typography
-													variant="h6"
-													component="div"
-													style={{ flex: 1 }}
-												>
-													{(
-														item.price *
-														item.quantity
-													).toLocaleString()}
-													<sup
-														style={{
-															fontSize: "10px",
-														}}
-													>
-														Ksh
-													</sup>
-												</Typography>
-												{item.size !== null ? (
-													<Typography
-														variant="subtitle1"
-														color="text.secondary"
-														component="div"
-														style={{
-															paddingRight: "30%",
-														}}
-													>
-														Size - {item.size}
-													</Typography>
-												) : null}
-											</div>
-										</CardContent>
-										<Box
+										src={
+											item.image1.slice(0, 4) === "http"
+												? `${item.image1}`
+												: `${API_URL}${item.image1.slice(
+														1
+												  )}`
+										}
+										alt={item.name}
+									/>
+								</Box>
+								<Box
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+										flex: 1,
+										//borderBottom: "1px solid gray",
+										//borderRight: "1px solid gray",
+										borderRadius: "5px 20px 5px",
+									}}
+								>
+									<CardContent sx={{ paddingTop: 0 }}>
+										<Grid
+											container
 											sx={{
 												display: "flex",
 												alignItems: "center",
-												pl: 1,
-												pb: 1,
+												justifyContent: "space-between",
 											}}
 										>
-											<IconButton
-												onClick={() => reduce(item)}
-											>
-												<RemoveCircleOutline
-													style={{
-														color: "black",
+											<Grid item xs={6} sm={6} md={6}>
+												<Typography
+													component={Link}
+													to={`/product/${item.slug}`}
+													className={classes.name}
+												>
+													{item.name}
+												</Typography>
+											</Grid>
+											<Grid item xs={4} sm={4} md={4}>
+												<Chip
+													sx={{
+														backgroundColor:
+															"#F7F7F7",
 													}}
-													size={25}
+													size="small"
+													label={
+														<Typography variant="subtitle2">
+															@
+															{item.price.toLocaleString()}
+															<sup
+																style={{
+																	fontSize:
+																		"10px",
+																}}
+															>
+																Ksh
+															</sup>
+														</Typography>
+													}
 												/>
-											</IconButton>
-											<Typography variant="h6">
-												{item.quantity !== undefined
-													? item.quantity
-													: 1}
+											</Grid>
+											<Grid item xs={2} sm={2} md={2}>
+												<IconButton
+													size="large"
+													onClick={() =>
+														removeItem(item.id)
+													}
+												>
+													<CancelPresentation
+														fontSize="inherit"
+														color="error"
+													/>
+												</IconButton>
+											</Grid>
+										</Grid>
+
+										<div style={{ display: "flex" }}>
+											<Typography
+												variant="h6"
+												component="div"
+												style={{ flex: 1 }}
+											>
+												{(
+													item.price * item.quantity
+												).toLocaleString()}
+												<sup
+													style={{
+														fontSize: "10px",
+													}}
+												>
+													Ksh
+												</sup>
 											</Typography>
-											<Button
-												className={classes.icon__btn}
-												disabled={
-													products.find(
-														(obj) =>
-															obj.id === item.id
-													) !== undefined
-														? products.find(
-																(obj) =>
-																	obj.id ===
-																	item.id
-														  ).quantity <
-														  item.quantity + 1
-														: false
-												}
-												onClick={() => addItem(item)}
-												variant="outlined"
-												sx={{ marginLeft: 2 }}
-											>
-												<Add
+											{item.size !== null ? (
+												<Typography
+													variant="subtitle1"
+													color="text.secondary"
+													component="div"
 													style={{
-														color: "black",
+														paddingRight: "30%",
 													}}
-													size={25}
-												/>
-											</Button>
-										</Box>
+												>
+													Size - {item.size}
+												</Typography>
+											) : null}
+										</div>
+									</CardContent>
+									<Box
+										sx={{
+											display: "flex",
+											alignItems: "center",
+											pl: 1,
+											pb: 1,
+										}}
+									>
+										<IconButton
+											onClick={() => reduce(item)}
+										>
+											<RemoveCircleOutline
+												style={{
+													color: "black",
+												}}
+												size={25}
+											/>
+										</IconButton>
+										<Typography variant="h6">
+											{item.quantity !== undefined
+												? item.quantity
+												: 1}
+										</Typography>
+										<Button
+											className={classes.icon__btn}
+											disabled={
+												products.find(
+													(obj) => obj.id === item.id
+												) !== undefined
+													? products.find(
+															(obj) =>
+																obj.id ===
+																item.id
+													  ).quantity <
+													  item.quantity + 1
+													: false
+											}
+											onClick={() => addItem(item)}
+											variant="outlined"
+											sx={{ marginLeft: 2 }}
+										>
+											<Add
+												style={{
+													color: "black",
+												}}
+												size={25}
+											/>
+										</Button>
 									</Box>
 								</Box>
-							</div>
+							</Paper>
 						)
 					)}
 				</Box>
 				<Box sx={{ width: "100%" }}>
 					<List
-						component="div"
+						component={Paper}
 						sx={{
 							maxWidth: "30em",
-							borderBottom: "1px solid gray",
-							borderRight: "1px solid gray",
+							borderBottom: "1px solid rgb(247,247,247)",
+							borderRight: "1px solid rgb(247,247,247)",
 							borderRadius: "5px 20px 5px",
 						}}
 					>

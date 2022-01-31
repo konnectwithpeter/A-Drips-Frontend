@@ -6,12 +6,11 @@ import {
 	Chip,
 	Hidden,
 	Paper,
-	Typography
+	Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-//import "../index.css";
 import AddtoWish from "./AddtoWish";
 import Custom from "./Custom";
 
@@ -38,13 +37,12 @@ let useStyles = makeStyles((theme) => ({
 				elevation: 8,
 			},
 		},
+		border: "1px solid rgb(247,247,247)",
 	},
 	images: {
 		height: "180px",
-		[theme.breakpoints.down("sm")]: {
-			height: "180px",
-		},
-		width: "180px",
+		
+		width: "250px",
 		margin: "auto",
 		objectFit: "cover",
 	},
@@ -110,14 +108,14 @@ const ProductContainer = (props) => {
 				className={classes.product__container}
 			>
 				<AddtoWish slug={item.slug} />
-				{item.isBrandNew === true ? (
+				{!item.isBrandNew && (
 					<Chip
-						label="Brand New"
+						label="Mtumba"
 						style={{ right: 2 }}
 						size="small"
 						className={classes.new}
 					/>
-				) : null}
+				)}
 				<Link to={`/product/${id}`}>
 					<CardMedia
 						style={{ zIndex: 1 }}

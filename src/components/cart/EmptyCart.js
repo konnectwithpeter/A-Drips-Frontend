@@ -28,7 +28,7 @@ const EmptyCart = () => {
 				>
 					Your cart is empty,
 					<u>
-						<Link to="/shop">shop some items</Link>
+						<Link to="/store">shop some items</Link>
 					</u>
 					.
 				</Typography>

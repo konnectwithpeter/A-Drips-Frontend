@@ -1,8 +1,11 @@
 import { AddShoppingCartRounded } from "@mui/icons-material";
-import { Alert, Button, Hidden, IconButton, Snackbar, Tooltip } from "@mui/material";
+import {
+	Alert, IconButton,
+	Snackbar,
+	Tooltip
+} from "@mui/material";
 import React, { useState } from "react";
 import { useCart } from "react-use-cart";
-
 
 const AddtoCart = (props) => {
 	let { addItem, items } = useCart();
@@ -34,23 +37,12 @@ const AddtoCart = (props) => {
 
 	return (
 		<>
-			
-				
-				<Hidden smDown><Tooltip title={`Add ${item.name} to Cart`}><Button
-				 size="small"
-					variant="outlined"
-					sx={{color:'black'}}
-					onClick={() => handleClick()}
-					startIcon={<AddShoppingCartRounded/>}
-				>
-					Add
-				</Button></Tooltip></Hidden>
-				<Hidden smUp><IconButton onClick={() => handleClick()}>
-				<AddShoppingCartRounded				
-					color="primary"
-				/>
-			</IconButton></Hidden>
-			
+			<Tooltip title={`Add ${item.name} to Cart`}>
+				<IconButton onClick={() => handleClick()}>
+					<AddShoppingCartRounded fontSize="inherit" color="primary" />
+				</IconButton>
+			</Tooltip>
+
 			<Snackbar
 				open={open}
 				autoHideDuration={2000}

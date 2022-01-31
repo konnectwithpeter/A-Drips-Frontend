@@ -1,5 +1,4 @@
 import {
-	Paper,
 	Table,
 	TableBody,
 	TableCell,
@@ -17,16 +16,15 @@ const CartSummary = () => {
 	let { items, cartTotal, totalItems, totalUniqueItems } = useCart();
 	return (
 		<TableContainer
-			component={Paper}
-			elevation={5}
 			sx={{
 				maxWidth: "35em",
-				
-				margin:"auto",
-				margin:"1em",marginTop:"0px"
+				backgroundColor: "transparent",
+				margin: "auto",
+				margin: "1em",
+				marginTop: "0px",
 			}}
 		>
-			<Table sx={{ maxWidth: "100%"}}>
+			<Table sx={{ maxWidth: "100%" }}>
 				<TableHead>
 					<TableRow>
 						<TableCell colSpan={5}>
@@ -48,7 +46,13 @@ const CartSummary = () => {
 						<TableRow key={index}>
 							<TableCell>
 								<img
-									src={item.image1.slice(0,4)==='http'?`${item.image1}`:`${API_URL}${item.image1.slice(1)}`}
+									src={
+										item.image1.slice(0, 4) === "http"
+											? `${item.image1}`
+											: `${API_URL}${item.image1.slice(
+													1
+											  )}`
+									}
 									alt={item.name}
 									style={{
 										maxHeight: 50,

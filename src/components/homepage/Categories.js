@@ -1,5 +1,6 @@
-import { Box, Link, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { ArrowBackRounded, ArrowForwardRounded } from "@mui/icons-material";
+import { Box, Fab, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { makeStyles, useTheme } from "@mui/styles";
 import parse from "html-react-parser";
 import React, { useContext } from "react";
 import Carousel from "react-multi-carousel";
@@ -12,19 +13,19 @@ import Custom from "../../reusable/Custom";
 
 const responsive = {
 	desktop: {
-		breakpoint: { max: 3000, min: 1024 },
+		breakpoint: { max: 3000, min: 900 },
 		items: 1,
 		slidesToSlide: 1, // optional, default to 1.
 		partialVisibilityGutter: 0,
 	},
 	tablet: {
-		breakpoint: { max: 1024, min: 464 },
+		breakpoint: { max: 900, min: 600 },
 		items: 1,
 		slidesToSlide: 1, // optional, default to 1.
 		partialVisibilityGutter: 0,
 	},
 	mobile: {
-		breakpoint: { max: 464, min: 0 },
+		breakpoint: { max: 600, min: 15 },
 		items: 1,
 		slidesToSlide: 1, // optional, default to 1.
 		partialVisibilityGutter: 0,
@@ -37,11 +38,9 @@ let useStyles = makeStyles((theme) => ({
 	},
 	category: {
 		display: "flex",
-		minHeight: "300px",
-		padding: "1rem",
 		margin: "0 auto",
 		maxWidth: "50rem",
-		maxHeight: "fit-content",
+		height: "fit-content",
 	},
 	image__div: {
 		display: "flex",
@@ -53,8 +52,31 @@ let useStyles = makeStyles((theme) => ({
 	text__div: {
 		display: "flex",
 		flexDirection: "column",
-		paddingTop: "2rem",
+		justifyContent: "center",
 		width: "50%",
+		gap: ".7rem",
+	},
+	image: {
+		[theme.breakpoints.down("md")]: {
+			height: "150px",
+			width: "150px",
+		},
+		[theme.breakpoints.up("md")]: {
+			height: "250px",
+			width: "250px",
+		},
+	},
+	carousel: {
+		[theme.breakpoints.down("md")]: {
+			position: "relative",
+		},
+	},
+	buttons: {
+		position: "absolute",
+		top: 0,
+		right: "5%",
+		display: "flex",
+		gap: ".5rem",
 	},
 }));
 export default function CategoriesSection() {
@@ -65,14 +87,43 @@ export default function CategoriesSection() {
 	let { API_URL } = useContext(APIContext);
 
 	let handleOnClick = (category) => {
-		navigate("/shop");
+		navigate("/store");
 		setParam(category);
 	};
+
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.down("md"));
+
+	const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+		const {
+			carouselState: { currentSlide },
+		} = rest;
+		return (
+			<div className={classes.buttons} style={{}}>
+				<IconButton
+					aria-label="previous"
+					size="small"
+					disabled={currentSlide === 0 ? true : false}
+					onClick={() => previous()}
+				>
+					<ArrowBackRounded font="inherit" />
+				</IconButton>
+				<IconButton
+					size="small"
+					onClick={() => next()}
+					aria-label="next"
+				>
+					<ArrowForwardRounded font="inherit" />
+				</IconButton>
+			</div>
+		);
+	};
+
 	return (
 		categories.length > 0 && (
 			<div className={classes.container}>
 				<Custom.TextPriStyle
-					component="h4"
+					component="h3"
 					sx={{
 						fontSize: "25px",
 						textAlign: "center",
@@ -83,20 +134,26 @@ export default function CategoriesSection() {
 					text="Available Categories"
 				/>
 
-				<Box sx={{ borderRadius: "0px" }} elevation={0}>
+				<Box
+					sx={{ borderRadius: "0px" }}
+					elevation={0}
+					className={classes.carousel}
+				>
 					<Carousel
+					//style={{overflow: "hidden"}}
 						responsive={responsive}
 						autoPlay={false}
 						//infinite={true}
-						//autoPlay={isMobile === true ? true : false}
-						removeArrowOnDeviceType={["mobile"]}
-						//autoPlaySpeed={5000}
+						//autoPlay={matches && true}
+						removeArrowOnDeviceType={["mobile", "tablet"]}
+						//autoPlaySpeed={10000}
 						keyBoardControl={true}
-						showDots={true}
-						partialVisible={true}
+						showDots={false}
+						partialVisible={false}
+						customButtonGroup={matches && <ButtonGroup />}
 					>
 						{categories.map((category, index) => (
-							<Box className={classes.category} key={index}>
+							<Box className={classes.category} key={index}  aria-hidden="false" >
 								<div className={classes.image__div}>
 									<img
 										src={
@@ -108,10 +165,7 @@ export default function CategoriesSection() {
 												  )}`
 										}
 										alt={category.category}
-										style={{
-											width: "250px",
-											height: "250px",
-										}}
+										className={classes.image}
 									/>
 								</div>
 								<div className={classes.text__div}>
@@ -119,18 +173,11 @@ export default function CategoriesSection() {
 										style={{
 											fontWeight: "light-bold",
 											fontSize: "20px",
-											textTransform: "underline",
 											color: "black",
-											cursor: "pointer",
 										}}
-										component={Link}
-										onClick={() =>
-											handleOnClick(category.category)
-										}
 									>
 										{category.category}
 									</Typography>
-									<br />
 
 									{category.description !== null && (
 										<Typography
@@ -140,6 +187,23 @@ export default function CategoriesSection() {
 											{parse(category.description)}
 										</Typography>
 									)}
+
+									<Fab
+										variant="extended"
+										color="primary"
+										size="medium"
+										sx={{
+											backgroundColor: "black",
+											textTransform: "none",
+											width: "fit-content",
+										}}
+										elevation={12}
+										onClick={() =>
+											handleOnClick(category.category)
+										}
+									>
+										Browse
+									</Fab>
 								</div>
 							</Box>
 						))}

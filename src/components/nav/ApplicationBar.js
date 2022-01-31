@@ -1,6 +1,4 @@
-import {
-	ShoppingCart
-} from "@mui/icons-material";
+import { ShoppingCart } from "@mui/icons-material";
 import {
 	AppBar,
 	Badge,
@@ -10,7 +8,7 @@ import {
 	Toolbar,
 	Tooltip,
 	Typography,
-	useScrollTrigger
+	useScrollTrigger,
 } from "@mui/material";
 import { makeStyles, styled } from "@mui/styles";
 import PropTypes from "prop-types";
@@ -24,26 +22,13 @@ import DropdownMenu from "./Dropdown";
 let useStyles = makeStyles((theme) => ({
 	nav: {},
 	brand: {
-		display: "flex",
-		marginRight: "4px",
-		minWidth: "20%",
-		maxWidth: "30%",
-		alignItems: "center",
-		justifyContent: "left",
-	},
-	small__brand: {
 		textDecoration: "none",
+		textDecorationLine: "none",
+		fontSize: "25px",
+		fontWeight: "light-bold",
 		color: "black",
-		textUnderlineOffset: "none",
-		"&:hover": {
-			transform: "translateY(-5%)",
-		},
-	},
-	hum: {
-		border: "0px",
-		float: "right",
-		"&:focus": {
-			outline: "none",
+		[theme.breakpoints.down("md")]: {
+			fontSize: "20px",
 		},
 	},
 	toolbar: {
@@ -60,18 +45,15 @@ let useStyles = makeStyles((theme) => ({
 	icons__grid: {
 		display: "flex",
 		[theme.breakpoints.down("md")]: {
-			width: "60%",
-			gap:"2rem"
-		},
-		[theme.breakpoints.up("sm")]: {
-			width: "40%",
+			gap: ".8rem",
 		},
 		alignItems: "center",
 		justifyContent: "flex-end",
-		[theme.breakpoints.up("md")]:{
-			gap:"4rem"
-		}
-		
+		[theme.breakpoints.up("md")]: {
+			gap: "4rem",
+		},
+		maxWidth: "fit-content",
+		maxHeight: "fit-content",
 	},
 	search: {
 		maxWidth: "400px",
@@ -79,6 +61,13 @@ let useStyles = makeStyles((theme) => ({
 	},
 	cart: {
 		justifyContent: "left",
+	},
+
+	container: {
+		width: "100%",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
 	},
 }));
 
@@ -99,8 +88,11 @@ const ApplicationBar = () => {
 		return React.cloneElement(children, {
 			elevation: trigger ? 3 : 0,
 			sx: trigger
-				? { backgroundColor: "rgb(255,255,255, .94)" }
-				: { backgroundColor: "rgb(255,255,255, .0)" },
+				? { backgroundColor: "rgb(245,245,245, .96)" }
+				: {
+						backgroundColor: "rgb(245,245,245, .0)",
+						borderBottom: "1px solid rgb(0,0,0, .05)",
+				  },
 		});
 	}
 
@@ -124,64 +116,41 @@ const ApplicationBar = () => {
 
 	return (
 		<ElevationScroll>
-			<AppBar position="sticky" sx={{ zIndex: 2 }}>
-				<Toolbar style={{ backgroundColor: "transparent" }}>
-					<Grid
-						container
-						sx={{ width: "100%" }}
-						justifyContent="space-between"
-					>
-						<Grid
-							item
-							align="center"
-							style={{
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-							}}
+			<AppBar
+				position="sticky"
+				sx={{ zIndex: 2, maxHeight: "fit-content", padding: 0 }}
+			>
+				<Toolbar
+					style={{
+						backgroundColor: "transparent",
+						maxHeight: "fit-content",
+					}}
+				>
+					<div className={classes.container}>
+						<Typography
+							component={Link}
+							to="/"
+							className={classes.brand}
 						>
-							<Typography
-								component={Link}
-								to="/"
-								sx={{
-									textDecoration: "none",
-									textDecorationLine: "none",
-									fontSize: "25px",
-									fontWeight: "light-bold",
-									color: "black",
-								}}
-							>
-								A<sup>+</sup> Drips
-							</Typography>
-						</Grid>
+							A<sup>+</sup> Drips
+						</Typography>
 
 						{location.pathname === "/" ||
-						location.pathname === "/shop" ? (
+						location.pathname === "/store" ? (
 							<Hidden mdDown>
-								<Grid
-									item
+								<div
 									style={{
-										minWidth: "37.5%",
-										alignItems: "center",
 										display: "flex",
+										flex: 1,
+										alignItems: "center",
+										justifyContent: "flex-end",
 									}}
 								>
-									<div
-										style={{
-											display: "flex",
-											flex: 1,
-											paddingTop: "5px",
-										}}
-									>
-										<SearchForm />
-									</div>
-								</Grid>
+									<SearchForm />
+								</div>
 							</Hidden>
-						) : (
-							""
-						)}
-
-						<Grid item className={classes.icons__grid}>
+						) : null}
+						<div className={classes.icons__grid}>
 							<AccountMenu sx={{ mr: 20 }} />
 							{location.pathname === "/signup" ||
 							location.pathname === "/checkout" ? null : (
@@ -189,11 +158,6 @@ const ApplicationBar = () => {
 									<IconButton
 										size="medium"
 										onClick={() => navigate("/cart")}
-										sx={
-											location.pathname === "/cart"
-												? { transform: "scale(.6)" }
-												: {}
-										}
 									>
 										<StyledBadge
 											className={classes.cart}
@@ -209,8 +173,8 @@ const ApplicationBar = () => {
 								</Tooltip>
 							)}
 							<DropdownMenu />
-						</Grid>
-					</Grid>
+						</div>
+					</div>
 				</Toolbar>
 			</AppBar>
 		</ElevationScroll>

@@ -8,18 +8,15 @@ const SearchContext = createContext();
 export default SearchContext;
 
 export const SearchProvider = ({ children }) => {
-	let [stringLength, setStringLength] = useState(0);
 	let [items, setItems] = useState();
 	let [results, setResults] = useState("");
 	let [string, setString] = useState("");
 	let [loading, setLoading] = useState(true);
 	let [allItems, setAllItems] = useState([]);
-	let [focused, setFocused] = useState(false)
-	let [searchKeys, setSearchKeys] = useState(["name", "description"]);
 	let [param, setParam] = useState();
 	const navigate = useNavigate();
-	
-	let {products} = useContext(ProductsContext)
+
+	let { products } = useContext(ProductsContext);
 
 	let getItems = () => {
 		setItems(products);
@@ -30,70 +27,58 @@ export const SearchProvider = ({ children }) => {
 	let location = useLocation();
 
 	useEffect(() => {
-		getItems()
+		getItems();
 	}, [products]);
 
-	const handleOnFocus = () => {
-		setFocused(true)
-		//console.log("focued");
-	};
+	const [searchString, setSearchString] = useState("");
 
-	const handleOnSearch = (string, results) => {
-		setString(string);
-		setStringLength(string.length);
-		setResults(results);
-		if (string.length > 2 && location.pathname === "/" && focused) {
-			navigate("/shop");
+	const handleSearch = (prop) => (event) => {
+		const newSearchString = event.target.value;
+		setSearchString(newSearchString);
+		if (newSearchString.length > 1 && location.pathname === "/") {
+			navigate("/store");
 		}
 		window.scroll(0, 0);
+		setResults(
+			items
+				.filter(
+					(r) =>
+						r.name
+							.toLowerCase()
+							.match(newSearchString.toLocaleLowerCase()) ||
+						r.category
+							.toLowerCase()
+							.match(newSearchString.toLocaleLowerCase()) ||
+						r.subcategory
+							.toLowerCase()
+							.match(newSearchString.toLocaleLowerCase()) ||
+						r.short_description
+							.toLowerCase()
+							.match(newSearchString.toLocaleLowerCase()) ||
+						r.summary
+							.toLowerCase()
+							.match(newSearchString.toLocaleLowerCase())
+				)
+				.slice(0, 48)
+		);
 	};
 
-	const handleOnHover = (result) => {
-		// the item hovered
-		//console.log(result);
-	};
-
-	const handleOnClear = () => {
-		// the item hovered
-		setResults([]);
-		setString("");
-	};
-
-	// useEffect(() => {
-	// 	if (string.length === 0) {
-	// 		handleOnClear();
-	// 		window.scroll(0, 0);
-	// 	}
-	// }, [string, results]);
-
-	const handleOnSelect = (item) => {
-		//navigate(`/product/${item.id}`);
-
-		setResults([item]);
-	};
-
-	const formatResult = (item) => {
-		return item;
+	const handleCancelSearch = () => {
+		setSearchString("");
 	};
 
 	let contextData = {
 		items: items,
 		results: results,
 		string: string,
-		searchKeys: searchKeys,
 		allItems: allItems,
-		stringLength: stringLength,
 		param: param,
 
+		searchString: searchString,
+		handleSearch: handleSearch,
+		handleCancelSearch: handleCancelSearch,
+
 		setParam: setParam,
-		setSearchKeys: setSearchKeys,
-		formatResult: formatResult,
-		handleOnFocus: handleOnFocus,
-		handleOnHover: handleOnHover,
-		handleOnSelect: handleOnSelect,
-		handleOnSearch: handleOnSearch,
-		//handleHomeSearch: handleHomeSearch,
-		handleOnClear: handleOnClear,
 		setString: setString,
 		setResults: setResults,
 		setItems: setItems,

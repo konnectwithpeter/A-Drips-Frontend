@@ -1,15 +1,16 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-	Visibility,
-	VisibilityOff
-} from "@mui/icons-material";
-import {
-	Alert, Button,
+	Alert,
+	Button,
 	Chip,
 	Divider,
 	IconButton,
 	InputAdornment,
 	Paper,
-	TextField
+	TextField,
+	Typography,
+	Checkbox,
+	FormControlLabel,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
@@ -47,7 +48,7 @@ let useStyles = makeStyles((theme) => ({
 			minWidth: "400px",
 		},
 		margin: "auto",
-		paddingTop: "3em",
+		paddingTop: "1.5em",
 	},
 }));
 const CreateAccount = () => {
@@ -56,10 +57,12 @@ const CreateAccount = () => {
 	let classes = useStyles();
 	let defaultData = { name: "", email: "", password: "", repeatPassword: "" };
 	const [values, setValues] = useState(defaultData);
+	const [subscribe, setSubscribe] = useState(true);
 
 	// custom rule will have name 'isPasswordMatch'
 	let [isInvalid, setIsInvalid] = useState(false);
 	const [submitErrors, setSubmitErrors] = useState(true);
+	const [disabled, setDisabled] = useState(false);
 	let [passwordMismatch, setPasswordMismatch] = useState(false);
 	let [passwordError, setPasswordError] = useState(false);
 	let [emailError, setEmailError] = useState(false);
@@ -80,7 +83,6 @@ const CreateAccount = () => {
 	const handleChange = (prop) => (event) => {
 		setSubmitErrors(false);
 		setIsInvalid(false);
-
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
@@ -153,6 +155,7 @@ const CreateAccount = () => {
 	}, [values]);
 
 	let sendData = async () => {
+		setDisabled(true);
 		try {
 			let res = await axios.post(`${API_URL}api/register/`, {
 				username: values.name,
@@ -161,6 +164,11 @@ const CreateAccount = () => {
 			});
 			if (res.status === 201) {
 				navigate("/login");
+			}
+			if (subscribe === true) {
+				axios.post(`${API_URL}api/subscribe/`, {
+					email: values.email,
+				});
 			}
 		} catch (error) {
 			if (error.response) {
@@ -177,6 +185,7 @@ const CreateAccount = () => {
 				}
 			}
 		}
+		setDisabled(false);
 	};
 	let handleSubmit = (e) => {
 		e.preventDefault();
@@ -202,28 +211,23 @@ const CreateAccount = () => {
 				className={classes.paper}
 				onSubmit={handleSubmit}
 			>
-				{isInvalid === true ? (
+				<Typography
+					sx={{
+						fontSize: "20px",
+						fontWeight: "light-bold",
+						textAlign: "center",
+					}}
+				>
+					Create a New Account
+				</Typography>
+				<br />
+				{isInvalid === true && (
 					<div style={{ marginBottom: "2em" }}>
 						<Alert severity="error">
 							You have some errors in your form — check them out!
 						</Alert>
 					</div>
-				) : null}
-
-				{/* <Box
-					style={{
-						paddingBottom: "1em",
-						width: "100%",
-					}}
-				>
-					<ManageAccountsRounded
-						color="primary"
-						sx={{ fontSize: 70, display: "flex", margin: "auto" }}
-					/>
-					<Typography variant="h6" sx={{ textAlign: "center" }}>
-						Hello, welcome to A<sup>+</sup> Drips
-					</Typography>
-				</Box> */}
+				)}
 
 				<TextField
 					className={classes.field}
@@ -311,9 +315,21 @@ const CreateAccount = () => {
 					required
 				/>
 				<br />
+				<br />
+				<FormControlLabel
+					control={
+						<Checkbox
+							onChange={() => setSubscribe(!subscribe)}
+							checked={subscribe}
+							color="default"
+						/>
+					}
+					label="Join Our Newsletter"
+				/>
+
 				<div
 					style={{
-						marginTop: "2em",
+						marginTop: "1em",
 						display: "flex",
 						justifyContent: "space-between",
 					}}
@@ -330,6 +346,7 @@ const CreateAccount = () => {
 						type="submit"
 						label="Create Account"
 						component={Button}
+						disabled={disabled}
 						color="primary"
 						variant="contained"
 						sx={{

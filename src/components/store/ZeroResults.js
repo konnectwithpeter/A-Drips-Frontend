@@ -4,7 +4,7 @@ import SearchContext from "../../context/SearchContext";
 
 const ZeroResults = () => {
 
-	let {handleOnClear} = useContext(SearchContext);
+	let {handleCancelSearch} = useContext(SearchContext);
 	return (
 		<div
 			style={{
@@ -22,7 +22,7 @@ const ZeroResults = () => {
 			>
 				<Typography>
 					No results for your search, click here to {" "}
-					<Button onClick={()=>handleOnClear()}>clear search</Button>
+					<Button onClick={()=>handleCancelSearch()}>clear search</Button>
 				</Typography>
 			</Paper>
 		</div>

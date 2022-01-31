@@ -1,3 +1,4 @@
+import { GridViewRounded } from "@mui/icons-material";
 import {
 	Avatar,
 	Box,
@@ -6,9 +7,10 @@ import {
 	Paper,
 	Tab,
 	Tabs,
-	Typography
+	Typography,
+	useMediaQuery,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import APIContext from "../../context/APIContext";
@@ -20,12 +22,11 @@ import ProductCardSkeleton from "../../reusable/ProductCardSkeleton";
 let useStyles = makeStyles((theme) => ({
 	container: {
 		[theme.breakpoints.up("lg")]: {
-			flexDirection: "row",
 			maxWidth: "80rem",
 			padding: "0 auto",
 			margin: "0 auto",
 		},
-		maxWidth:"100%"
+		maxWidth: "100%",
 	},
 }));
 
@@ -34,6 +35,9 @@ const AllProducts = () => {
 	let { categories } = useContext(ProductsContext);
 	const [value, setValue] = useState(0);
 	let { allItems, setItems, param, setParam } = useContext(SearchContext);
+
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
 	let [loading, setLoading] = useState(true);
 	let [pageProducts, setPageProducts] = useState();
@@ -122,25 +126,13 @@ const AllProducts = () => {
 										width: 80,
 										height: 80,
 										backgroundColor: "transparent",
+										border: "1px solid rgb(0,0,0,.04)",
 									}}
 								>
-									<img
-										style={{
-											width: "50px",
-											height: "50px",
-											objectFit: "fill",
-										}}
-										src={`${API_URL}static/logo.svg`}
-										alt="All Products"
+									<GridViewRounded
+										sx={{ color: "black" }}
+										fontSize="large"
 									/>
-									{/* <img
-										style={{
-											height: "1em",
-											width: "1em",
-										}}
-										src={`${API_URL}products/Smart%20Watch/laptop_600.png`}
-										alt="all"
-									/> */}
 								</Avatar>
 							}
 							iconPosition="top"
@@ -163,13 +155,13 @@ const AllProducts = () => {
 											style={{
 												width: "80px",
 												height: "80px",
-												objectFit: "fill",
+												objectFit: "cover",
 											}}
 											src={
-												category.image.slice(0, 4) ===
+												category.icon.slice(0, 4) ===
 												"http"
-													? `${category.image}`
-													: `${API_URL}${category.image.slice(
+													? `${category.icon}`
+													: `${API_URL}${category.icon.slice(
 															1
 													  )}`
 											}
@@ -192,18 +184,15 @@ const AllProducts = () => {
 						<ProductCardSkeleton loops={24} />
 					</Grid>
 				) : pageProducts.length > 0 ? (
-					<Grid container spacing={3} className={classes.container}>
+					<Grid
+						container
+						spacing={matches ? 1 : 3}
+						className={classes.container}
+					>
 						{pageProducts.map((product, index) => (
-							<Grid
-								item
-								xs={6}
-								sm={4}
-								md={4}
-								lg={3}
-								key={index}
-							>
+							<Grid item xs={6} sm={4} md={4} lg={3} key={index}>
 								<Custom.ProductContainer
-								align="left"
+									align="left"
 									key={index}
 									id={product.slug}
 									discounted={product.discounted}
@@ -231,7 +220,7 @@ const AllProducts = () => {
 				)}
 			</div>
 			{pageCount < 2 ? null : (
-				<Box style={{ width: "100%", marginTop: "5em" }}>
+				<Box style={{ width: "100%", marginTop: "2em" }}>
 					<div>
 						<Pagination
 							variant="outlined"

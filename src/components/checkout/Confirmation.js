@@ -51,16 +51,20 @@ const Confirmation = ({ formData, locations }) => {
 						<Typography>
 							<br />
 							Congratulations, your order was placed{" "}
-							<u>successfully</u>.
+							successfully.
 							<br />
 							Estimated delivery time is{" "}
 							<TimeStamp relative date={checkDeliveryDate()} />.
 						</Typography>
 						<br />
-						<Custom.ButtonPry
+						<div style={{display: 'flex', justifyContent: "space-between"}}><Custom.ButtonPry
 							onClick={() => navigate('/', {replace: true})}
 							text="Back to Shop"
-						/>
+						/><Custom.ButtonPry
+							onClick={() => navigate('/account', {replace: true})}
+							text="My Account"
+						/></div>
+						
 					</Paper>
 				</Badge>
 			</Paper>

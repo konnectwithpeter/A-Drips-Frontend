@@ -4,14 +4,13 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import TimeStamp from "react-timestamp";
 import ProductsContext from "../../context/ProductsContext";
-import "./styles.css";
 
 let useStyles = makeStyles((theme) => ({
 	container: {
 		color: "black",
 		maxWidth: "50rem",
 		[theme.breakpoints.up("md")]: {
-			backgroundColor: "white",
+			backgroundColor: "transparent",
 			margin: "0 auto",
 		},
 		[theme.breakpoints.down("md")]: {
@@ -55,7 +54,7 @@ let useStyles = makeStyles((theme) => ({
 		margin: "0 auto",
 		fontSize: "25px",
 		fontStyle: "italic",
-		backgroundColor: "rgb(251,251,251,.4)",
+		//backgroundColor: "rgb(251,251,251,.4)",
 	},
 }));
 

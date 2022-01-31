@@ -37,6 +37,7 @@ let useStyles = makeStyles((theme) => ({
 	carousel: {
 		backgroundColor: "",
 		padding: 2,
+		padingBottom: 5
 	},
 	label: {
 		borderTopRightRadius: "25px",
@@ -61,7 +62,7 @@ const Testimonials = () => {
 			{reviews.length < 1 ? null : (
 				<Box sx={{ marginTop: "4em" }}>
 					<Typography
-						component="h4"
+						component="h5"
 						variant="h6"
 						sx={{
 							textAlign: "center",
@@ -87,15 +88,17 @@ const Testimonials = () => {
 						keyBoardControl={true}
 						showDots={true}
 						partialVisible={true}
+						//renderDotsOutside={true}
 					>
 						{reviews.slice(0, 4).map((review) => (
 							<Paper
 								elevation={0}
 								key={review.id}
 								sx={{
-									backgroundColor: "",
+									//backgroundColor: " rgb(247,247,247)",
 									padding: 2,
 									margin: 2,
+									marginBottom: "2rem"
 								}}
 								align="center"
 							>

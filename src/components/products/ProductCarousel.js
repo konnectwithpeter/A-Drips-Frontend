@@ -17,6 +17,13 @@ let useStyles = makeStyles((theme) => ({
 		},
 		position: "relative",
 	},
+	wish:{
+		[theme.breakpoints.up("md")]:{
+			left: "14%", top: "10%" 
+		},[theme.breakpoints.down("md")]:{
+			left: "10%", top: "10%" 
+		}
+	}
 }));
 
 const responsive = {
@@ -75,16 +82,20 @@ const ProductCarousel = ({ product, hght, wth }) => {
 					.map((image, index) =>
 						image === null ? null : (
 							<React.Fragment key={index}>
-								<AddtoWish slug={product.slug} style={{left:'10%', top:'10%'}} />
+								<AddtoWish
+									slug={product.slug}
+									className={classes.wish}
+								/>
 								<img
 									key={index}
 									style={{
-										height: hght || "auto",
+										height: hght || 400,
 										maxHeight: "60vh",
-										width: wth || "60%",
+										width: wth || 400,
 										objectFit: "",
 										display: "flex",
 										margin: "0 auto",
+										marginBottom: "1rem",
 									}}
 									src={
 										image.slice(0, 4) === "http"

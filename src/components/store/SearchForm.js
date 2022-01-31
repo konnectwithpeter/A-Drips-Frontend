@@ -1,18 +1,18 @@
+import { CloseRounded, SearchRounded } from "@mui/icons-material";
+import { IconButton, InputAdornment, OutlinedInput, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/styles";
 import React, { useContext } from "react";
-import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import { useLocation } from "react-router-dom";
 import SearchContext from "../../context/SearchContext";
 
 const SearchForm = () => {
-	let {
-		string,
-		items,
-		handleOnSelect,
-		handleOnSearch,
-		handleOnHover,
-		handleOnFocus,
-		formatResult,
-		handleOnClear,
-	} = useContext(SearchContext);
+	let { searchString, handleSearch, handleCancelSearch } =
+		useContext(SearchContext);
+
+		const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('md'))
+
+	const location = useLocation();
 
 	return (
 		<div
@@ -23,27 +23,37 @@ const SearchForm = () => {
 				alignItems: "center",
 			}}
 		>
-			<ReactSearchAutocomplete
-				styling={{
-					height: "30px",
-					boxShadow: "rgb(0,0,0, .2) 0px 1px 6px 0px",
-					borderRadius: "15px",
-					placeholderColor: "gray",
-					fontFamily: "Quicksand",
-				}}
-				fuseOptions={{ keys: ["name", "summary"] }}
-				items={string.length < 2 ? [] : items}
-				onSearch={handleOnSearch}
-				onHover={handleOnHover}
-				onSelect={handleOnSelect}
-				inputSearchString={string}
-				onClear={handleOnClear}
-				autoFocus={string.length<2?false:true}
-				onFocus={handleOnFocus}
-				resultStringKeyName="name"
-				formatResult={formatResult}
+			<OutlinedInput
+				style={{ height: "2rem" }}
+				autoFocus={
+					location.pathname !== "/" && searchString.length > 0 && true
+				}
+				value={searchString}
+				size="small"
+				onChange={handleSearch("search")}
 				placeholder="search for a product..."
-				maxResults={12}
+				startAdornment={
+					searchString.length === 0 && (
+						<InputAdornment position="start">
+							<SearchRounded />
+						</InputAdornment>
+					)
+				}
+				fullWidth={
+					location.pathname !== "/" && matches && true
+				}
+				endAdornment={
+					searchString.length > 0 && (
+						<InputAdornment position="end">
+							<IconButton
+								aria-label="clear-search"
+								onClick={handleCancelSearch}
+							>
+								<CloseRounded />
+							</IconButton>
+						</InputAdornment>
+					)
+				}
 			/>
 		</div>
 	);

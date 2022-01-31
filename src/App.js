@@ -9,7 +9,6 @@ import { OrdersProvider } from "./context/OrdersContext";
 import { ProductsProvider } from "./context/ProductsContext";
 import { SearchProvider } from "./context/SearchContext";
 import { WishesProvider } from "./context/WishListContext";
-import "./index.css";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
@@ -34,13 +33,12 @@ const App = () => {
 		<APIProvider>
 			<CartProvider>
 				<Box
-				className="main"
 					elevation={0}
 					style={{
 						minHeight: "100vh",
 						margin: 0,
 						padding: 0,
-						backgroundColor: "transparent",
+						backgroundColor: "whitesmoke",
 					}}
 				>
 					<AuthProvider>
@@ -59,67 +57,78 @@ const App = () => {
 											paddingTop: 0,
 										}}
 									>
-										<Suspense fallback={<Loader/>}>
-										<Routes>
-											<Route
-												path="/"
-												exact
-												element={<HomePage />}
-											/>
-											<Route
-												path="/shop"
-												exact
-												element={<StorePage />}
-											/>
-											<Route
-												path="/product/:id"
-												element={<ProductPage />}
-											/>
-											<Route
-												path="/cart"
-												element={<ShoppingCart />}
-											/>
-											<Route element={<PrivateRoute />}>
+										<Suspense fallback={<Loader />}>
+											<Routes>
 												<Route
-													path="/profile"
-													element={
-														<OrdersProvider>
-															<ProfilePage />
-														</OrdersProvider>
-													}
+													path="/"
+													exact
+													element={<HomePage />}
 												/>
 												<Route
-													path="/checkout"
-													element={<CheckoutPage />}
-												/>
-											</Route>
-											<Route element={<PublicLogin />}>
-												<Route
-													path="/create-account"
-													element={<RegisterPage />}
+													path="/store"
+													exact
+													element={<StorePage />}
 												/>
 												<Route
-													path="/login"
-													element={<LoginPage />}
+													path="/product/:id"
+													element={<ProductPage />}
 												/>
 												<Route
-													path={
-														"/reset-password/:id/:id"
-													}
-													element={<ResetPassword />}
+													path="/cart"
+													element={<ShoppingCart />}
 												/>
-											</Route>
+												<Route
+													element={<PrivateRoute />}
+												>
+													<Route
+														path="/account"
+														element={
+															<OrdersProvider>
+																<ProfilePage />
+															</OrdersProvider>
+														}
+													/>
+													<Route
+														path="/checkout"
+														element={
+															<CheckoutPage />
+														}
+													/>
+												</Route>
+												<Route
+													element={<PublicLogin />}
+												>
+													<Route
+														path="/create-account"
+														element={
+															<RegisterPage />
+														}
+													/>
+													<Route
+														path="/login"
+														element={<LoginPage />}
+													/>
+													<Route
+														path={
+															"/reset-password/:id/:id"
+														}
+														element={
+															<ResetPassword />
+														}
+													/>
+												</Route>
 
-											<Route
-												path="/news"
-												exact
-												element={<AllBlogsPage />}
-											/>
-											<Route
-												path="*"
-												element={<NotFound />}
-											/>
-										</Routes></Suspense>
+												<Route
+													path="/news"
+													exact
+													element={<AllBlogsPage />}
+												/>
+												<Route
+													path="*"
+													element={<NotFound />}
+												/>
+											</Routes>
+										</Suspense>
 									</Box>
 								</SearchProvider>
 							</ProductsProvider>

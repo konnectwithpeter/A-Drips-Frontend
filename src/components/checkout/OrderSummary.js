@@ -4,7 +4,7 @@ import {
 	LocationOn,
 	PersonPin,
 	Phone,
-	Receipt
+	Receipt,
 } from "@mui/icons-material";
 import {
 	Alert,
@@ -19,7 +19,7 @@ import {
 	ListItemText,
 	Paper,
 	Snackbar,
-	Typography
+	Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useContext } from "react";
@@ -29,14 +29,14 @@ import APIContext from "../../context/APIContext";
 import AuthContext from "../../context/AuthContext";
 import Custom from "../../reusable/Custom";
 
-let useStyles = makeStyles((theme)=>({
-	form__data:{
-		[theme.breakpoints.down("md")]:{
+let useStyles = makeStyles((theme) => ({
+	form__data: {
+		[theme.breakpoints.down("md")]: {
 			display: "flex",
 			flexDirection: "column",
-		}
-	}
-}))
+		},
+	},
+}));
 
 const OrderSummary = ({ navigation, formData, locations }) => {
 	let { API_URL } = useContext(APIContext);
@@ -45,7 +45,6 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 	const [disabled, setDisabled] = React.useState(false);
 	let { items, cartTotal, emptyCart, totalUniqueItems } = useCart();
 	let classes = useStyles();
-	
 
 	let shippingPlace = locations.filter(
 		(location) => location.location === formData.location
@@ -75,7 +74,7 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 			price: item.price,
 			image: `${item.image1}`,
 			name: item.name,
-			url: `${API_URL}product/${item.slug}`
+			url: `${API_URL}product/${item.slug}`,
 		});
 	});
 
@@ -88,7 +87,7 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 	};
 
 	let handleCreateOrder = async () => {
-		setDisabled(true)
+		setDisabled(true);
 		try {
 			await fetch(`${API_URL}api/create-order/`, {
 				method: "POST",
@@ -113,12 +112,13 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 	return (
 		<div style={{ padding: "1em" }}>
 			<Paper
-				elevation={5}
+				elevation={0}
 				align="center"
 				style={{
 					margin: "auto",
 					maxWidth: "45em",
 					paddingBottom: "2em",
+					backgroundColor: "transparent",
 				}}
 			>
 				<Box sx={{ margin: "0px auto" }}>
@@ -156,6 +156,7 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 							<Typography
 								variant="h6"
 								component={Link}
+								sx={{ color: "black" }}
 								to="/cart"
 							>
 								Back to Cart
@@ -166,117 +167,96 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 							style={{ padding: 3, width: "98%", margin: "auto" }}
 						>
 							{items.map((item, index) => (
-								<div
-									style={{
-										width: "100%",
-										marginBottom: "2em",
-										borderRadius: "5px 20px 5px", borderBottom:'1px solid gray' 
-									}}
+								<Paper
 									key={index}
+									sx={{
+										display: "flex",
+										maxHeight: 150,
+										flexShrink: 3,
+										width: "100%",
+										marginBottom: "3rem",
+									}}
+									elevation={1}
 								>
 									<Box
 										sx={{
-											display: "flex",
-											maxHeight: 150,
-											flexShrink: 3,
-											width: "100%",
+											borderRadius: "5px 20px 5px",
+											objectFit: "fill",
+											width: "35%",
 										}}
 									>
-										<Box
+										<CardMedia
+											component="img"
 											sx={{
-												
-												borderRadius: "5px 20px 5px",
-												objectFit: "fill",
-												width: "35%",
+												width: "auto",
+												height: 150,
 											}}
-										>
-											<CardMedia
-												component="img"
+											src={
+												item.image1.slice(0, 4) ===
+												"http"
+													? `${item.image1}`
+													: `${API_URL}${item.image1.slice(
+															1
+													  )}`
+											}
+											alt={item.name}
+										/>
+									</Box>
+									<Box
+										sx={{
+											display: "flex",
+											flexDirection: "column",
+											flex: 1,
+											borderRadius: "5px 20px 5px",
+										}}
+									>
+										<CardContent sx={{ paddingTop: 0 }}>
+											<Grid
+												container
 												sx={{
-													width: "auto",
-													height: 150,
-													borderRadius:
-														"5px 20px 5px",
+													display: "flex",
+													alignItems: "center",
+													justifyContent:
+														"space-between",
 												}}
-												src={
-													item.image1.slice(0, 4) ===
-													"http"
-														? `${item.image1}`
-														: `${API_URL}${item.image1.slice(
-																1
-														  )}`
-												}
-												alt={item.name}
-											/>
-										</Box>
-										<Box
-											sx={{
-												display: "flex",
-												flexDirection: "column",
-												flex: 1,
-																							borderRadius: "5px 20px 5px",
-											}}
-										>
-											<CardContent sx={{ paddingTop: 0 }}>
-												<Grid
-													container
-													sx={{
-														display: "flex",
-														alignItems: "center",
-														justifyContent:
-															"space-between",
-													}}
-												>
-													<Grid
-														item
-														xs={8}
-														sm={8}
-														md={8}
+											>
+												<Grid item xs={8} sm={8} md={8}>
+													<Typography
+														style={{
+															fontSize: "18px",
+															color: "black",
+														}}
 													>
-														<Typography
-															style={{
-																fontSize:
-																	"18px",
-																color: "black",
-															}}
-														>
-															{item.name}
-														</Typography>
-													</Grid>
-													<Grid
-														item
-														xs={4}
-														sm={4}
-														md={4}
-													>
-														<Chip
-															sx={{
-																backgroundColor:
-																	"#F7F7F7",
-															}}
-															size="small"
-															label={
-																<Typography variant="subtitle2">
-																	@
-																	{item.price.toLocaleString()}
-																	<sup
-																		style={{
-																			fontSize:
-																				"10px",
-																		}}
-																	>
-																		Ksh
-																	</sup>
-																</Typography>
-															}
-														/>
-													</Grid>
+														{item.name}
+													</Typography>
 												</Grid>
+												<Grid item xs={4} sm={4} md={4}>
+													<Chip
+														sx={{
+															backgroundColor:
+																"#F7F7F7",
+														}}
+														size="small"
+														label={
+															<Typography variant="subtitle2">
+																@
+																{item.price.toLocaleString()}
+																<sup
+																	style={{
+																		fontSize:
+																			"10px",
+																	}}
+																>
+																	Ksh
+																</sup>
+															</Typography>
+														}
+													/>
+												</Grid>
+											</Grid>
 
-												<div
-													style={{ display: "flex" }}
-												>
-													{/* <Typography
+											<div style={{ display: "flex" }}>
+												{/* <Typography
 												variant="h6"
 												component="div"
 												style={{ flex: 1 }}
@@ -293,49 +273,45 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 													Ksh
 												</sup>
 											</Typography> */}
-													{item.size !== null ? (
-														<Typography
-															variant="h6"
-															color="text.secondary"
-															component="div"
-															style={{
-																paddingRight:
-																	"30%",
-															}}
-														>
-															Size - {item.size}
-														</Typography>
-													) : null}
-												</div>
-											</CardContent>
-											<Box
-												sx={{
-													display: "flex",
-													alignItems: "center",
-													pl: 1,
-													pb: 1,
-												}}
-											>
-												<Typography variant="h6">
-													{item.quantity} *{" "}
-													{item.price} ={" "}
-													<u>
-														{item.quantity *
-															item.price}
-													</u>
-													<sup
+												{item.size !== null ? (
+													<Typography
+														variant="h6"
+														color="text.secondary"
+														component="div"
 														style={{
-															fontSize: "10px",
+															paddingRight: "30%",
 														}}
 													>
-														Ksh
-													</sup>
-												</Typography>
-												<br />
-											</Box>
+														Size - {item.size}
+													</Typography>
+												) : null}
+											</div>
+										</CardContent>
+										<Box
+											sx={{
+												display: "flex",
+												alignItems: "center",
+												pl: 1,
+												pb: 1,
+											}}
+										>
+											<Typography variant="h6">
+												{item.quantity} * {item.price} ={" "}
+												<u>
+													{item.quantity * item.price}
+												</u>
+												<sup
+													style={{
+														fontSize: "10px",
+													}}
+												>
+													Ksh
+												</sup>
+											</Typography>
+											<br />
 										</Box>
 									</Box>
-								</div>
+								</Paper>
 							))}
 							<Grid container>
 								<Grid item xs={12} sm={12} md={8}>
@@ -410,13 +386,19 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 									sm={12}
 									md={4}
 									align="right"
-									sx={{ paddingRight: "5px" }}
+									sx={{
+										paddingRight: "5px",
+										display: "flex",
+										flexDirection: "column",
+										gap: ".5rem",
+									}}
 								>
 									<div
 										style={{
 											display: "flex",
 											justifyContent: "flex-end",
 											alignItems: "center",
+											gap: ".5rem",
 										}}
 									>
 										<Typography variant="subtitle1">

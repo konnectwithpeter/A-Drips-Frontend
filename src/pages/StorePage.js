@@ -1,4 +1,4 @@
-import { Box, Hidden, Typography } from "@mui/material";
+import { Box, Hidden } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -16,9 +16,10 @@ const Root = styled("div")(({ theme }) => ({
 
 const StorePage = () => {
 	let location = useLocation();
-	let { results, string } = useContext(SearchContext);
+	let { results, searchString } = useContext(SearchContext);
 	useEffect(() => {
 		window.scroll(0, 0);
+		document.title = `Store - Browse all products available in store`;
 	}, []);
 	return (
 		<>
@@ -34,18 +35,12 @@ const StorePage = () => {
 						</div>
 					</Box>
 				</Hidden>
-				{string.length < 2 && location.pathname === "/shop" ? (
+				{searchString.length < 2 && location.pathname === "/store" ? (
 					<AllProducts />
-				) : string.length > 5 &&
+				) : searchString.length > 0 &&
 				  results.length < 1 &&
-				  location.pathname === "/shop" ? (
+				  location.pathname === "/store" ? (
 					<ZeroResults />
-				) : string.length < 5 &&
-				  results.length < 1 &&
-				  location.pathname === "/shop" ? (
-					<Typography component="div" style={{ marginTop: "2em", color:"black" }}>
-						Improve your search results by typing more characters
-					</Typography>
 				) : (
 					<SearchedResults />
 				)}

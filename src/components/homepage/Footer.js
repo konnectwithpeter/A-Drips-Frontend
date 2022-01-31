@@ -61,9 +61,9 @@ const Footer = () => {
 							<br />
 							<Typography sx={{ textAlign: "center" }}>
 								Thanks for visiting A<sup>+</sup> Drips. We are
-								an online clothing store selling resell and
-								brand new products. For your convenience, we also
-								deliver products to your doorstep.
+								an online shoe store selling mtumba and
+								brand new shoes. For your convenience, we also
+								deliver your order to your doorstep.
 							</Typography>
 							<br />
 							<List sx={{ width: "fit-content", margin: "auto" }}>
@@ -150,9 +150,9 @@ const Footer = () => {
 									<ListItemButton
 										disablepadding="true"
 										sx={{ padding: 0 }}
-										onClick={() => navigate("/shop")}
+										onClick={() => navigate("/store")}
 									>
-										<ListItemText primary="Shop" />
+										<ListItemText primary="Store" />
 									</ListItemButton>
 								</ListItem>
 								<ListItem sx={{ textAlign: "center", margin:0, padding: 0 }}>
@@ -226,7 +226,7 @@ const Footer = () => {
 								<ListItemText
 									primary={
 										<Typography>
-											0707070707 <br /> 0707070077
+											0701378648 <br /> 0708734402
 										</Typography>
 									}
 								/>
@@ -238,7 +238,7 @@ const Footer = () => {
 								<ListItemText
 									primary={
 										<Typography>
-											0707070707 <br /> 0707070077
+											0701378648 <br /> 0708734402
 										</Typography>
 									}
 								/>

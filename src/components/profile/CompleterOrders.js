@@ -282,7 +282,7 @@ export default function CompleteOrders({ completeOrders }) {
 					<br />
 					<Button
 						variant="contained"
-						onClick={() => navigate("/shop")}
+						onClick={() => navigate("/store")}
 					>
 						click to shop
 					</Button>

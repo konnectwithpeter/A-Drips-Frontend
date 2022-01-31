@@ -67,7 +67,7 @@ const ResetPassword = () => {
 		try {
 			await axios.post(`${API_URL}api/request-reset-email/`, {
 				email: values.resetEmail,
-				redirect_url: `${BASE_URL}#/reset-password/`,
+				redirect_url: `${BASE_URL}reset-password/`,
 			});
 			setOpen(false);
 			setLinkRequested(true);

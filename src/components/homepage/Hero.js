@@ -1,7 +1,7 @@
 import { Fab, Paper, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import parse from "html-react-parser";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import APIContext from "../../context/APIContext";
 import ProductsContext from "../../context/ProductsContext";
@@ -43,9 +43,11 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		[theme.breakpoints.up("md")]: {
-			gap: "3rem",
 			width: "fit-content",
 			maxWidth: "30rem",
+			justifyContent: "space-around",
+			gap:"2.5rem",
+			//border: "1px solid black",
 			// paddingLeft: "3rem",
 			// paddingTop: "3rem",
 		},
@@ -93,9 +95,12 @@ const useStyles = makeStyles((theme) => ({
 	hero__image: {
 		//position: "absolute",
 		height: "350px",
-		objectFit: "cover",
+		objectFit: "fill",
 		width: "350px",
-		[theme.breakpoints.down("md")]: {},
+		[theme.breakpoints.down("md")]: {
+			height: "200px",
+			//objectFit: "fill",
+		},
 		[theme.breakpoints.up("md")]: {
 			//paddingTop: "8%",
 			margin: ".5rem",
@@ -103,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Hero = () => {
+const Hero = ({ setLandScreenLoaded }) => {
 	let classes = useStyles();
 	let { hero } = useContext(ProductsContext);
 	let { API_URL } = useContext(APIContext);
@@ -116,15 +121,29 @@ const Hero = () => {
 				: `${API_URL}${hero[0].image.slice(1)}`;
 	}
 
+	useEffect(() => {
+		if (hero[0] !== undefined) {
+			setLandScreenLoaded(true);
+		}
+	}, [heroImage]);
+
 	return (
 		hero[0] !== undefined && (
 			<div className={classes.container}>
 				<div className={classes.left__div}>
 					<div className={classes.left__container}>
-						<Typography className={classes.title} variant="h1">
+						<Typography
+							className={classes.title}
+							component="h1"
+							variant="h1"
+						>
 							{hero[0].title}
 						</Typography>
-						<Typography className={classes.more__text} variant="h2">
+						<Typography
+							className={classes.more__text}
+							component="h2"
+							variant="h2"
+						>
 							{parse(hero[0].text)}
 						</Typography>
 						<div>
@@ -138,7 +157,7 @@ const Hero = () => {
 								}}
 								component={Paper}
 								elevation={12}
-								onClick={() => navigate("/shop")}
+								onClick={() => navigate("/store")}
 							>
 								Check our Store
 							</Fab>

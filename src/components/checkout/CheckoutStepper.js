@@ -141,11 +141,11 @@ ColorlibStepIcon.propTypes = {
 	icon: PropTypes.node,
 };
 
-const steps = ["Local Shipping Info", "Billing Info", "Place Order"];
+const steps = ["Shipping Info", "Billing Info", "Place Order"];
 
 export default function CheckoutStepper({ step }) {
 	return (
-		<div sx={{ width: "100%" }} spacing={4}>
+		<div sx={{ width: "100%", marginTop: "2rem", border: "1px solid black"}} spacing={4}>
 			<Stepper
 				alternativeLabel
 				activeStep={step.i}

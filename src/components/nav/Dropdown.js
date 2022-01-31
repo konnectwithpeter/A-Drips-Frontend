@@ -1,6 +1,5 @@
 import {
-	ChatBubbleOutline,
-	Close, Menu as MenuIcon,
+	ChatBubbleOutline, Menu as MenuIcon,
 	StoreRounded
 } from "@mui/icons-material";
 import {
@@ -37,16 +36,12 @@ export default function DropdownMenu() {
 			>
 				<Tooltip title="More">
 					<IconButton
-					aria-label="more options"
+						aria-label="more options"
 						size="small"
 						color="primary"
 						onClick={handleClick}
 					>
-						{!open ? (
-							<MenuIcon font="inherit" sx={{ color: "black" }} />
-						) : (
-							<Close font="inherit" sx={{ color: "black" }} />
-						)}
+						<MenuIcon font="inherit" sx={{ color: "black" }} />
 					</IconButton>
 				</Tooltip>
 			</Box>
@@ -84,7 +79,7 @@ export default function DropdownMenu() {
 				transformOrigin={{ horizontal: "right", vertical: "top" }}
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
-				<MenuItem onClick={() => navigate("/shop")}>
+				<MenuItem onClick={() => navigate("/store")}>
 					<ListItemIcon>
 						<StoreRounded fontSize="small" />
 					</ListItemIcon>

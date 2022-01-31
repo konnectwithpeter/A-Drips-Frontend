@@ -45,6 +45,7 @@ const style = {
 	bgcolor: "background.paper",
 	boxShadow: 24,
 	p: 4,
+	maxWidth:"85vw"
 };
 
 let useStyles = makeStyles((theme) => ({
@@ -484,7 +485,7 @@ export default function WaitingOrders({ pendingOrders, locations }) {
 					<br />
 					<Button
 						variant="contained"
-						onClick={() => navigate("/shop")}
+						onClick={() => navigate("/store")}
 					>
 						click to shop
 					</Button>

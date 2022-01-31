@@ -22,6 +22,7 @@ const CheckoutPage = () => {
 
 	useEffect(() => {
 		getLocations();
+		document.title = `A+ Drips - Checkout and place order`;
 	}, []);
 
 	const steps = [

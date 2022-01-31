@@ -15,6 +15,7 @@ import {
 	ListItemAvatar,
 	ListItemText,
 	Paper,
+	Tab,
 	Tooltip,
 	Typography,
 } from "@mui/material";
@@ -31,6 +32,8 @@ import APIContext from "../context/APIContext";
 import OrdersContext from "../context/OrdersContext";
 import WishesContext from "../context/WishListContext";
 import PageLoadingBuffer from "../reusable/PageLoadingBuffer";
+import AccountInfo from "../components/profile/AccountInfo";
+import AuthContext from "../context/AuthContext";
 
 let useStyles = makeStyles((theme) => ({
 	container: {
@@ -39,10 +42,9 @@ let useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		minHeight: "70vh",
 		flexDirection: "column",
-		// backgroundImage:
-		// 	"linear-gradient(to top left, rgb(40,49,59) ,rgb(72,84,97))",
-
-		//backgroundColor: "red",
+		[theme.breakpoints.up("md")]: {
+			paddingTop: "1rem",
+		},
 	},
 	glassy: {
 		width: "100%",
@@ -54,7 +56,7 @@ let useStyles = makeStyles((theme) => ({
 			marginTop: "2rem",
 		},
 		overflow: "auto",
-		minHeight: "80vh",
+		//minHeight: "80vh",
 
 		[theme.breakpoints.down("md")]: {
 			width: "95vw",
@@ -118,12 +120,39 @@ let useStyles = makeStyles((theme) => ({
 		border: "0px",
 		borderBottomRightRadius: "10px",
 	},
+	greeting: {
+		textAlign: "right",
+		padding: ".25em",
+		fontSize: "25px",
+		[theme.breakpoints.down("md")]: {
+			display: "none",
+		},
+	},
+	small__greeting: {
+		padding: "1rem .5rem",
+		display: "flex",
+		flexDirection: "column",
+		gap: ".8rem",
+		borderRadius: "10px",
+		[theme.breakpoints.up("md")]: {
+			width: "100%",
+			minWidth: "59vw",
+			maxWidth: "59vw",
+		},
+		[theme.breakpoints.down("md")]: {
+			width: "90vw",
+			margin: "1rem",
+
+			flexDirection: "column",
+		},
+	},
 }));
 
 const ProfilePage = () => {
 	let [domComponent, setDomComponent] = useState("Dashboard");
 	let classes = useStyles();
 	let { API_URL } = useContext(APIContext);
+	let { user } = useContext(AuthContext);
 	let [locations, setLocations] = useState([]);
 	let [loading, setLoading] = useState(true);
 
@@ -186,6 +215,7 @@ const ProfilePage = () => {
 
 	useEffect(() => {
 		getLocations();
+		document.title = `A+ Drips - My account `;
 	}, []);
 
 	let pendingOrders = orders.filter(
@@ -202,20 +232,33 @@ const ProfilePage = () => {
 		pendingOrders,
 		completeOrders,
 		cancelledOrders,
+		user,
 	};
+
 	return loading === true ? (
 		<PageLoadingBuffer />
 	) : (
 		<div className={classes.container}>
-			<Paper className={classes.glassy} elevation={5}>
+			{domComponent === "Dashboard" && (
+				<Paper elevation={1} className={classes.small__greeting}>
+					<Typography sx={{ paddingLeft: "1rem", fontSize: "18px" }}>
+						Hi, {user.username}
+					</Typography>
+					<AccountInfo {...props} />
+				</Paper>
+			)}
+
+			<Paper className={classes.glassy} elevation={1}>
 				<Box className={classes.toolbar}>
-					<Tooltip title="Dashboard">
-						<IconButton
-							onClick={() => setDomComponent("Dashboard")}
-						>
-							<Dashboard className={classes.icon__btn} />
-						</IconButton>
-					</Tooltip>
+					{domComponent !== "Dashboard" && (
+						<Tooltip title="Dashboard">
+							<IconButton
+								onClick={() => setDomComponent("Dashboard")}
+							>
+								<Dashboard className={classes.icon__btn} />
+							</IconButton>
+						</Tooltip>
+					)}
 					<Tooltip title="Pending">
 						<IconButton onClick={() => setDomComponent("Pending")}>
 							<Pending className={classes.icon__btn} />
@@ -244,7 +287,7 @@ const ProfilePage = () => {
 					</Tooltip>
 				</Box>
 				<Box sx={{ flex: 1 }}>
-					{domComponent === "Dashboard" ? (
+					{domComponent === "Dashboard" && (
 						<Box className={classes.quickrecap}>
 							<div component={List} className={classes.left__div}>
 								<ListItem
@@ -356,12 +399,10 @@ const ProfilePage = () => {
 								</ListItem>
 							</div>
 						</Box>
-					) : null}
+					)}
 
 					<Paper elevation={0} className={classes.dom__component}>
-						{domComponent === "Dashboard" ? (
-							<CollapsibleTable {...props} />
-						) : domComponent === "Pending" ? (
+						{domComponent === "Pending" ? (
 							<WaitingOrders {...props} />
 						) : domComponent === "Delivered" ? (
 							<DoneOrders {...props} />
@@ -369,132 +410,11 @@ const ProfilePage = () => {
 							<WishList {...props} />
 						) : domComponent === "Cancelled" ? (
 							<CancelledOrders {...props} />
-						) : (
-							<CollapsibleTable {...props} />
-						)}
+						) : null}
 					</Paper>
 				</Box>
 			</Paper>
 			<Footer />
-			{/* <div
-				style={{
-					width: "100%",
-					paddingBottom: "3em",
-					paddingTop: "1em",
-				}}
-			>
-				<Paper elevation={0}>
-					<Grid
-						container
-						spacing={2}
-						sx={{
-							margin: "auto",
-							marginBottom: "2em",
-							width: "95%",
-						}}
-					>
-						<Grid xs={6} sm={6} md={3} lg={3} item elevation={5}>
-							<ListItem
-								component={Paper}
-								sx={{ borderRadius: "1rem" }}
-								elevation={5}
-							>
-								<ListItemAvatar>
-									<PendingRounded
-										color="primary"
-										fontSize="large"
-									/>
-								</ListItemAvatar>
-								<ListItemText
-									primary={
-										<Typography variant="h4">
-											<strong>
-												{pendingOrders.length}
-											</strong>
-										</Typography>
-									}
-									secondary="Pending Orders"
-								/>
-							</ListItem>
-						</Grid>
-						<Grid xs={6} sm={6} md={3} lg={3} item elevation={5}>
-							<ListItem
-								component={Paper}
-								sx={{ borderRadius: "1rem" }}
-								elevation={5}
-							>
-								<ListItemAvatar>
-									<DoneAllRounded
-										color="success"
-										fontSize="large"
-									/>
-								</ListItemAvatar>
-								<ListItemText
-									primary={
-										<Typography variant="h4">
-											<strong>
-												{completeOrders.length}
-											</strong>
-										</Typography>
-									}
-									secondary="Complete Orders"
-								/>
-							</ListItem>
-						</Grid>
-						<Grid xs={6} sm={6} md={3} lg={3} item elevation={5}>
-							<ListItem
-								component={Paper}
-								sx={{ borderRadius: "1rem" }}
-								elevation={5}
-							>
-								<ListItemAvatar>
-									<FavoriteRounded
-										style={{ color: "#ab47bc" }}
-										fontSize="large"
-									/>
-								</ListItemAvatar>
-								<ListItemText
-									primary={
-										<Typography variant="h4">
-											<strong>{wishes.length}</strong>
-										</Typography>
-									}
-									secondary="My Wish list Items"
-								/>
-							</ListItem>
-						</Grid>
-						<Grid xs={6} sm={6} md={3} lg={3} item elevation={5}>
-							<ListItem
-								component={Paper}
-								sx={{ borderRadius: "1rem" }}
-								elevation={5}
-							>
-								<ListItemAvatar>
-									<ErrorOutlineRounded
-										color="error"
-										fontSize="large"
-									/>
-								</ListItemAvatar>
-								<ListItemText
-									primary={
-										<Typography variant="h4">
-											<strong>
-												{cancelledOrders.length}
-											</strong>
-										</Typography>
-									}
-									secondary="Cancelled Orders"
-								/>
-							</ListItem>
-						</Grid>
-					</Grid>
-				</Paper>
-				<PendingOrders {...props} />
-				<CompleteOrders {...props} />
-				<WishList {...props} />
-				<CancelledOrders {...props} />
-			</div> */}
-			{/* <Footer /> */}
 		</div>
 	);
 };

@@ -32,6 +32,10 @@ const AllBlogsPage = () => {
 		getPosts();
 	}, [page]);
 
+	useEffect(() => {
+		document.title = `News/Blogs - Latest News/Blogs for A+ Drips Customers `;
+	}, []);
+
 	return (
 		<>
 			<div
@@ -39,7 +43,7 @@ const AllBlogsPage = () => {
 					backgroundColor: "",
 					paddingTop: "2em",
 					paddingBottom: "2em",
-					minHeight:"60vh"
+					minHeight: "60vh",
 				}}
 			>
 				{loading === true ? null : <AllBlogs allPosts={allPosts} />}

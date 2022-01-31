@@ -5,7 +5,8 @@ import {
 	PolicyRounded
 } from "@mui/icons-material";
 import {
-	Button, Dialog,
+	Button,
+	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
@@ -26,7 +27,6 @@ let useStyles = makeStyles((theme) => ({
 		},
 	},
 	label: {
-
 		padding: 5,
 		marginBottom: "2em",
 		marginTop: "2em",
@@ -49,8 +49,8 @@ const RiskReducers = () => {
 			<div style={{ display: "flex", flex: 1, justifyContent: "start" }}>
 				<div className={classes.label}>
 					<Custom.TextPriStyle
-					component="h4"
-					sx={{fontSize: "25px", fontWeight: "light-bold" }}
+						component="h3"
+						sx={{ fontSize: "25px", fontWeight: "light-bold" }}
 						variant="subtitle1"
 						text="Why Choose Us"
 					/>
@@ -65,10 +65,11 @@ const RiskReducers = () => {
 						<Paper
 							elevation={0}
 							sx={{
+								//backgroundColor: "rgb(247,247,247)",
 								padding: 2,
 								borderRadius: "10px",
-								maxWidth:"30rem",
-								margin:"0 auto",
+								maxWidth: "30rem",
+								margin: "0 auto",
 							}}
 						>
 							<div
@@ -80,7 +81,8 @@ const RiskReducers = () => {
 								<LocalOfferRounded color="primary" />
 								<Typography
 									sx={{ fontWeight: "bold" }}
-									variant="subtitle1" component="h4"
+									variant="subtitle1"
+									component="h4"
 								>
 									Prices
 								</Typography>
@@ -89,9 +91,9 @@ const RiskReducers = () => {
 								variant="body1"
 								className={classes.body}
 							>
-								Get awesome clothing for as low as 100 bob. Place
-								your order now and enjoy the cheapest prices in
-								the market with quick deliveries.
+								Get awesome clothing for pocket friendly prices.
+								Place your order now and enjoy the cheapest
+								prices in the market with quick deliveries.
 							</Typography>
 						</Paper>
 					</Grid>
@@ -99,10 +101,11 @@ const RiskReducers = () => {
 						<Paper
 							elevation={0}
 							sx={{
+								//backgroundColor: "rgb(247,247,247)",
 								padding: 2,
 								borderRadius: "10px",
-								maxWidth:"30rem",
-								margin:"0 auto",
+								maxWidth: "30rem",
+								margin: "0 auto",
 							}}
 						>
 							<div
@@ -114,7 +117,8 @@ const RiskReducers = () => {
 								<LocalShippingRounded color="primary" />
 								<Typography
 									sx={{ fontWeight: "bold" }}
-									variant="subtitle1" component="h4"
+									variant="subtitle1"
+									component="h4"
 								>
 									Delivery
 								</Typography>
@@ -133,10 +137,11 @@ const RiskReducers = () => {
 						<Paper
 							elevation={0}
 							sx={{
+								//backgroundColor: "rgb(247,247,247)",
 								padding: 2,
 								borderRadius: "10px",
-								maxWidth:"30rem",
-								margin:"0 auto",
+								maxWidth: "30rem",
+								margin: "0 auto",
 							}}
 						>
 							<div
@@ -148,7 +153,8 @@ const RiskReducers = () => {
 								<AccountBalanceWalletRounded color="primary" />
 								<Typography
 									sx={{ fontWeight: "bold" }}
-									variant="subtitle1" component="h4"
+									variant="subtitle1"
+									component="h4"
 								>
 									Ordering
 								</Typography>
@@ -167,10 +173,11 @@ const RiskReducers = () => {
 						<Paper
 							elevation={0}
 							sx={{
+								//backgroundColor: "rgb(247,247,247)",
 								padding: 2,
 								borderRadius: "10px",
-								maxWidth:"30rem",
-								margin:"0 auto",
+								maxWidth: "30rem",
+								margin: "0 auto",
 							}}
 						>
 							<div
@@ -182,7 +189,8 @@ const RiskReducers = () => {
 								<PolicyRounded color="primary" />
 								<Typography
 									sx={{ fontWeight: "bold" }}
-									variant="subtitle1" component="h4"
+									variant="subtitle1"
+									component="h4"
 								>
 									Policies
 								</Typography>
@@ -195,7 +203,10 @@ const RiskReducers = () => {
 								love our products. Need to return purchased
 								items? Check our{" "}
 								<span
-									style={{ textDecoration: "underline", cursor: "pointer" }}
+									style={{
+										textDecoration: "underline",
+										cursor: "pointer",
+									}}
 									onClick={() => setOpenPolicy(true)}
 								>
 									return and refund

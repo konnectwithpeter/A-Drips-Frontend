@@ -106,11 +106,11 @@ const ShippingAddress = ({ formData, setForm, navigation, locations }) => {
 				>
 					<Paper
 						align="center"
-						elevation={5}
+						elevation={1}
 						sx={{
 							maxWidth: "35em",
 							margin: "auto",
-
+							//backgroundColor:"transparent",
 							maxHeight: "fit",
 						}}
 					>

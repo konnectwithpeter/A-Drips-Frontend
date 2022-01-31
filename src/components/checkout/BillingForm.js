@@ -30,11 +30,12 @@ const BillingForm = ({ formData, setForm, navigation }) => {
 			}}
 		>
 			<Paper
-				elevation={8}
+				elevation={1}
 				sx={{
 					maxWidth: "95%",
 					margin: "auto",
 					width: "fit-content",
+					//backgroundColor:"transparent"
 				}}
 				align="center"
 			>

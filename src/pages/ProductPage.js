@@ -1,9 +1,11 @@
 import {
-	Button, Dialog,
+	Button,
+	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
-	DialogTitle, Slide
+	DialogTitle,
+	Slide,
 } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
@@ -17,7 +19,7 @@ import APIContext from "../context/APIContext";
 import ProductsContext from "../context/ProductsContext";
 
 const ProductPage = () => {
-	const params = useParams()
+	const params = useParams();
 	let { API_URL } = useContext(APIContext);
 	let [product, setProduct] = useState([]);
 	let [imageLoading, setImageLoading] = useState(true);
@@ -25,7 +27,7 @@ const ProductPage = () => {
 	let [relatedProducts, setRelatedProducts] = useState([]);
 	let { getProducts, products } = useContext(ProductsContext);
 	const [open, setOpen] = useState(false);
-	let navigate = useNavigate()
+	let navigate = useNavigate();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -57,9 +59,7 @@ const ProductPage = () => {
 		let ratings = await axios.get(`${API_URL}api/shop/reviews/`);
 		let allRatings = ratings.data;
 		//;
-		setReviews(
-			allRatings.filter((review) => review.product === params.id)
-		);
+		setReviews(allRatings.filter((review) => review.product === params.id));
 	};
 
 	useEffect(() => {
@@ -80,6 +80,13 @@ const ProductPage = () => {
 	const Transition = React.forwardRef(function Transition(props, ref) {
 		return <Slide direction="up" ref={ref} {...props} />;
 	});
+
+	useEffect(() => {
+		// This will run when the page first loads and whenever the title changes
+		if (product.short_description && product.name !== undefined) {
+			document.title = `${product.name} - ${product.short_description}`;
+		}
+	}, [product]);
 
 	return (
 		<>
@@ -116,8 +123,12 @@ const ProductPage = () => {
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={() => navigate('/', {replace: true})}>Home</Button>
-					<Button onClick={() => navigate('/shop', {replace: true})}>
+					<Button onClick={() => navigate("/", { replace: true })}>
+						Home
+					</Button>
+					<Button
+						onClick={() => navigate("/store", { replace: true })}
+					>
 						Store
 					</Button>
 				</DialogActions>

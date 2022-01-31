@@ -1,32 +1,10 @@
 import { Chip, Divider, Paper } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useNavigate } from "react-router-dom";
 import Custom from "../../reusable/Custom";
 
-let useStyles = makeStyles({
-	new: {
-		marginTop: 4,
-		zIndex: 2,
-		position: "absolute",
-		transform: "rotate(-4deg)",
-		backgroundColor: "rgb(237,108,2, .8)",
-		color: "white",
-		fontSize: "8px",
-
-		//transform: "scale(-4)"
-	},
-});
-
-const RelatedProducts = ({
-	product,
-	setImageLoading,
-	relatedProducts,
-	getProduct,
-}) => {
-	const navigate = useNavigate();
+const RelatedProducts = ({ product, relatedProducts }) => {
 	const responsive = {
 		desktop: {
 			breakpoint: { max: 3000, min: 1024 },
@@ -42,7 +20,7 @@ const RelatedProducts = ({
 		},
 		mobile: {
 			breakpoint: { max: 464, min: 0 },
-			items: 2,
+			items: 1.5,
 			slidesToSlide: 1, // optional, default to 1.
 			partialVisibilityGutter: 5,
 		},

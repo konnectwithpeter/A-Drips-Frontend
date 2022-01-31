@@ -1,32 +1,30 @@
 import {
 	AccountBoxOutlined,
-	AccountBoxRounded,
-	AccountCircleRounded,
 	Login,
 	Logout,
-	ManageAccounts
+	ManageAccounts,
+	PersonOutlineRounded,
+	PersonRounded,
 } from "@mui/icons-material";
 import {
-	Chip,
-	Hidden,
 	IconButton,
 	ListItemIcon,
 	ListItemText,
 	Menu,
 	MenuItem,
-	Tooltip
+	Tooltip,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 
 export default function AccountMenu() {
 	let { user, logoutUser } = React.useContext(AuthContext);
 
 	const navigate = useNavigate();
-	//let classes = useStyles();
+	let location = useLocation();
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
@@ -46,42 +44,13 @@ export default function AccountMenu() {
 			>
 				<Tooltip title="Account">
 					{user.username === "guest" ? (
-						<Chip
-							sx={{ ml: 0, flexShrink: 3 }}
-							size="small"
-							color="primary"
-							variant="contained"
-							icon={<AccountCircleRounded font="inherit" />}
-							// aria-haspopup="true"
-							// aria-expanded={open ? "true" : undefined}
-							onClick={handleClick}
-						/>
+						<IconButton aria-label="account" onClick={handleClick}>
+							<PersonOutlineRounded fontSize="inherit" />
+						</IconButton>
 					) : (
-						<>
-							<Hidden mdDown>
-								<Chip
-									onClick={handleClick}
-									size="small"
-									sx={{ ml: 0, flexShrink: 3 }}
-									color="primary"
-									icon={<AccountCircleRounded />}
-									variant="outlined"
-									label={`Hello, ${
-										user.username !== null ||
-										user.username !== undefined
-											? user.username.slice(0, 6)
-											: null
-									}`}
-								/>
-							</Hidden>
-							<Hidden mdUp>
-								<Tooltip title="Account">
-									<IconButton onClick={handleClick}>
-										<AccountBoxRounded />
-									</IconButton>
-								</Tooltip>
-							</Hidden>
-						</>
+						<IconButton aria-label="account" onClick={handleClick}>
+							<PersonRounded fontSize="inherit" />
+						</IconButton>
 					)}
 				</Tooltip>
 			</Box>
@@ -127,9 +96,7 @@ export default function AccountMenu() {
 							</ListItemIcon>
 							<ListItemText>Login</ListItemText>
 						</MenuItem>
-						<MenuItem
-							onClick={() => navigate("/create-account")}
-						>
+						<MenuItem onClick={() => navigate("/create-account")}>
 							<ListItemIcon>
 								<ManageAccounts fontSize="small" />
 							</ListItemIcon>
@@ -138,17 +105,17 @@ export default function AccountMenu() {
 					</div>
 				) : (
 					<div>
-						<MenuItem onClick={() => navigate("/profile")}>
-							<ListItemIcon>
-								<AccountBoxOutlined
-									color="primary"
-									fontSize="small"
-								/>
-							</ListItemIcon>
-							Account
-						</MenuItem>
-
-						<Divider />
+						{location.pathname !== "/account" && (
+							<MenuItem onClick={() => navigate("/account")}>
+								<ListItemIcon>
+									<AccountBoxOutlined
+										color="primary"
+										fontSize="small"
+									/>
+								</ListItemIcon>
+								Account
+							</MenuItem>
+						)}
 						<MenuItem
 							onClick={() => {
 								setAnchorEl(null);

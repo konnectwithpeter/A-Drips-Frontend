@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { createContext, useContext, useEffect, useState } from "react";
+import React,{ createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Custom from "../reusable/Custom";
 import APIContext from "./APIContext";
@@ -33,6 +33,10 @@ export const AuthProvider = ({ children }) => {
 
 	const navigate = useNavigate();
 
+	const goToPreviousPath = () => {
+		navigate(-1);
+	};
+
 	let loginUser = async (values) => {
 		//perform a post request
 		try {
@@ -49,12 +53,16 @@ export const AuthProvider = ({ children }) => {
 				setUser(jwt_decode(data.access));
 				localStorage.setItem("authTokens", JSON.stringify(data));
 				setLoggedIn(true);
-				//redirect user to home page
+				
 			}
 		} catch (err) {
 			//terminate the login process
 			setLoginError(true);
 			setProcessingLogin(false);
+		}
+		//redirect user to home page
+		if (!loginError && location.pathname === "/login") {
+			goToPreviousPath();
 		}
 	};
 

@@ -159,7 +159,7 @@ export default function OrdersList() {
 
 	return (
 		<Paper sx={{ width: "100%" }}>
-			<TableContainer>
+			<TableContainer  sx={{ maxHeight: 440 }}>
 				<Table aria-label="collapsible table">
 					<TableHead>
 						<TableRow>

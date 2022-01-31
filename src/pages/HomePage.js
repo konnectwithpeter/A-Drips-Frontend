@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TawkTo from "tawkto-react";
 import RiskReducers from "../components/homepage/RiskReducers";
 import Categories from "../components/homepage/Categories";
@@ -18,22 +18,17 @@ const Root = styled("div")(({ theme }) => ({
 		//backgroundColor: theme.palette.secondary.main,
 		//marginTop: "5em",
 	},
-
-	//   [theme.breakpoints.up('md')]: {
-	//     backgroundColor: theme.palette.primary.main,
-	//   },
-	//   [theme.breakpoints.up('lg')]: {
-	//     backgroundColor: green[500],
-	//   },
 }));
 
 const HomePage = () => {
-	const tawkToPropertyId = "61b3f62d80b2296cfdd12760";
+	const tawkToPropertyId = "61f3c0ec9bd1f31184d9c696";
 
 	// Direct Chat Link
 	// https://tawk.to/chat/tawkToPropertyId/tawkToKey
+	//https://tawk.to/chat/61f3c0ec9bd1f31184d9c696/1fqg2j76q
+	
 
-	const tawkId = "1fmjfj8mv";
+	const tawkId = "1fqg2j76q";
 
 	useEffect(() => {
 		var tawk = new TawkTo(tawkToPropertyId, tawkId);
@@ -43,23 +38,29 @@ const HomePage = () => {
 		});
 	}, []);
 
-	//alway scroll to the top of the page at screen load
 	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
+		// This will run when the page first loads and whenever the title changes
+		document.title = `Aplus Drips | The new online shoe store`;
 	}, []);
+
+	const [landScreenLoaded, setLandScreenLoaded] = useState(false);
 
 	return (
 		<Root id="body">
-			<Hero />
-			<WeeklyDeal />
-			<Categories />
-			<FeaturedProducts />
-			<RecentArrivals />
-			<RiskReducers />
-			<Testimonials />
-			<div style={{ marginTop: "3em" }}>
-				<Footer />
-			</div>
+			<Hero setLandScreenLoaded={setLandScreenLoaded} />
+			{landScreenLoaded && (
+				<>
+					<WeeklyDeal />
+					<Categories />
+					<FeaturedProducts />
+					<RecentArrivals />
+					<RiskReducers />
+					<Testimonials />
+					<div style={{ marginTop: "3em" }}>
+						<Footer />
+					</div>
+				</>
+			)}
 		</Root>
 	);
 };
