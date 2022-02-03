@@ -40,11 +40,19 @@ let useStyles = makeStyles((theme) => ({
 		border: "1px solid rgb(247,247,247)",
 	},
 	images: {
-		height: "180px",
-		
-		width: "250px",
+		height: "auto",
+		width: "auto",
 		margin: "auto",
+		height: "auto",
 		objectFit: "cover",
+		maxWidth: "100%",
+		[theme.breakpoints.down("md")]: {
+			height: "150px",
+		},
+		[theme.breakpoints.up("md")]: {
+			height: "180px",
+			width: "250px",
+		},
 	},
 	product__card: {
 		borderRadius: "15px",

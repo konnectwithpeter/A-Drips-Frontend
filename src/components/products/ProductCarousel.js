@@ -23,6 +23,12 @@ let useStyles = makeStyles((theme) => ({
 		},[theme.breakpoints.down("md")]:{
 			left: "10%", top: "10%" 
 		}
+	},
+	image__small: {
+		[theme.breakpoints.down("md")]:{
+			maxWidth: "100vw"
+
+		}
 	}
 }));
 
@@ -88,14 +94,15 @@ const ProductCarousel = ({ product, hght, wth }) => {
 								/>
 								<img
 									key={index}
+									className={classes.image__small}
 									style={{
-										height: hght || 400,
+										height: hght || "auto",
 										maxHeight: "60vh",
-										width: wth || 400,
-										objectFit: "",
+										width: wth || "auto",
 										display: "flex",
 										margin: "0 auto",
 										marginBottom: "1rem",
+										objectFit:"cover"
 									}}
 									src={
 										image.slice(0, 4) === "http"

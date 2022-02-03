@@ -82,6 +82,12 @@ let useStyles = makeStyles((theme) => ({
 		color: "white",
 		backgroundColor: "rgb(250,175,0)",
 		//transform: "scale(-4)"
+	},mtumba: {
+		//transform: "rotate(-4deg)",
+		fontSize: "10px",
+		color: "white",
+		backgroundColor: "black",
+		//transform: "scale(-4)"
 	},
 	price: {
 		fontSize: "20px",
@@ -92,7 +98,7 @@ let useStyles = makeStyles((theme) => ({
 	},
 	discount: {
 		fontSize: "12px",
-		
+
 		// fontWeight: "light-bold",
 	},
 }));
@@ -168,7 +174,20 @@ const ProductItem = ({ product, imageLoading, reviews }) => {
 										className={classes.new}
 									/>
 								</div>
-							) : null}
+							) : (
+								<div
+									style={{
+										display: "flex",
+										justifyContent: "end",
+									}}
+								>
+									<Chip
+										label="Mtumba"
+										size="small"
+										className={classes.mtumba}
+									/>
+								</div>
+							)}
 						</ListItem>
 						<ListItem>
 							<Rating
@@ -200,11 +219,12 @@ const ProductItem = ({ product, imageLoading, reviews }) => {
 												gap: "1rem",
 											}}
 										>
-											<div	style={{
-												display: "flex",
-												alignItems: "center",
-												
-											}}>
+											<div
+												style={{
+													display: "flex",
+													alignItems: "center",
+												}}
+											>
 												<Typography
 													className={classes.discount}
 												>
