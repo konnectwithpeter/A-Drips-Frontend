@@ -36,6 +36,15 @@ let useStyles = makeStyles((theme) => ({
 			flexDirection: "column",
 		},
 	},
+	product__image: {
+		width: "auto",
+		height: 150,
+		[theme.breakpoints.down("md")]: {
+			width: 100,
+			height: 100,
+			margin: "0 auto",
+		},
+	},
 }));
 
 const OrderSummary = ({ navigation, formData, locations }) => {
@@ -175,6 +184,7 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 										flexShrink: 3,
 										width: "100%",
 										marginBottom: "3rem",
+										alignItems: "center",
 									}}
 									elevation={1}
 								>
@@ -187,10 +197,7 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 									>
 										<CardMedia
 											component="img"
-											sx={{
-												width: "auto",
-												height: 150,
-											}}
+											className={classes.product__image}
 											src={
 												item.image1.slice(0, 4) ===
 												"http"
@@ -223,7 +230,7 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 												<Grid item xs={8} sm={8} md={8}>
 													<Typography
 														style={{
-															fontSize: "18px",
+															fontSize: "14px",
 															color: "black",
 														}}
 													>
@@ -238,7 +245,12 @@ const OrderSummary = ({ navigation, formData, locations }) => {
 														}}
 														size="small"
 														label={
-															<Typography variant="subtitle2">
+															<Typography
+																sx={{
+																	fontSize:
+																		"12px",
+																}}
+															>
 																@
 																{item.price.toLocaleString()}
 																<sup

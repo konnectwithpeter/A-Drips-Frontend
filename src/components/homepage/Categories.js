@@ -34,13 +34,15 @@ const responsive = {
 
 let useStyles = makeStyles((theme) => ({
 	container: {
-		marginTop: "3rem",
+		marginTop: "2rem",
 	},
 	category: {
 		display: "flex",
 		margin: "0 auto",
 		maxWidth: "50rem",
 		height: "fit-content",
+		border: "1px solid rgb(0,0,0, 0.05555)",
+		padding: "0.5rem 0",
 	},
 	image__div: {
 		display: "flex",
@@ -58,13 +60,20 @@ let useStyles = makeStyles((theme) => ({
 	},
 	image: {
 		[theme.breakpoints.down("md")]: {
-			height: "150px",
-			width: "150px",
+			height: "auto",
+			width: "180px",
+			objectFit:"cover",
 		},
 		[theme.breakpoints.up("md")]: {
-			height: "250px",
+			height: "auto",
 			width: "250px",
+			objectFit:"cover",
 		},
+	},
+	description:{
+		[theme.breakpoints.down("md")]:{
+			fontSize: "12px",
+		}
 	},
 	carousel: {
 		[theme.breakpoints.down("md")]: {
@@ -143,10 +152,10 @@ export default function CategoriesSection() {
 					//style={{overflow: "hidden"}}
 						responsive={responsive}
 						autoPlay={false}
-						//infinite={true}
-						//autoPlay={matches && true}
+						infinite={true}
+						autoPlay={true}
 						removeArrowOnDeviceType={["mobile", "tablet"]}
-						//autoPlaySpeed={10000}
+						autoPlaySpeed={5000}
 						keyBoardControl={true}
 						showDots={false}
 						partialVisible={false}
@@ -183,6 +192,7 @@ export default function CategoriesSection() {
 										<Typography
 											component="div"
 											variant="body2"
+											className={classes.description}
 										>
 											{parse(category.description)}
 										</Typography>
@@ -191,9 +201,9 @@ export default function CategoriesSection() {
 									<Fab
 										variant="extended"
 										color="primary"
-										size="medium"
+										size="small"
 										sx={{
-											backgroundColor: "black",
+											
 											textTransform: "none",
 											width: "fit-content",
 										}}
@@ -202,7 +212,7 @@ export default function CategoriesSection() {
 											handleOnClick(category.category)
 										}
 									>
-										Browse
+										Browse Collection
 									</Fab>
 								</div>
 							</Box>

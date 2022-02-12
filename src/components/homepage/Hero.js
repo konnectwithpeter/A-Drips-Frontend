@@ -19,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
 			marginBottom: "3rem",
 		},
 		[theme.breakpoints.down("md")]: {
-			flexDirection: "column",
+			//flexDirection: "column",
+			justifyContent: "space-between",
+			//border: "1px solid black"
 		},
 	},
 
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 			height: "fit-content",
 			maxWidth: "100%",
 			margin: "0 auto",
+			//border: "1px solid red",
 		},
 	},
 
@@ -46,16 +49,17 @@ const useStyles = makeStyles((theme) => ({
 			width: "fit-content",
 			maxWidth: "30rem",
 			justifyContent: "space-around",
-			gap:"2.5rem",
+			gap: "2.5rem",
 			//border: "1px solid black",
 			// paddingLeft: "3rem",
 			// paddingTop: "3rem",
 		},
 		[theme.breakpoints.down("md")]: {
 			top: "8%",
-			gap: "1.5rem",
-			alignItems: "center",
-			padding: "1rem",
+			gap: ".5rem",
+			alignItems: "left",
+			padding: "0rem .5rem",
+			paddingTop: "1rem",
 		},
 	},
 
@@ -70,40 +74,48 @@ const useStyles = makeStyles((theme) => ({
 		},
 		// position: "relative",
 		[theme.breakpoints.down("md")]: {
+			display: "none",
 			alignItems: "center",
-			maxWidth: "100%",
-			width: "100%",
+			maxWidth: "35%",
+			width: "35%",
 			maxHeight: "fit-content",
-			justifyContent: "center",
+			justifyContent: "right",
 		},
 	},
 
 	title: {
 		fontSize: "25px",
 		[theme.breakpoints.down("md")]: {
-			textAlign: "center",
+			fontSize: "18px",
+			textAlign: "left",
+			fontWeight: "light-bold",
 		},
 	},
 	more__text: {
 		fontSize: "15px !important",
 		[theme.breakpoints.down("md")]: {
-			textAlign: "center",
+			
+			textAlign: "left",
 			fontSize: "12px !important",
 		},
 	},
 
 	hero__image: {
 		//position: "absolute",
-		height: "350px",
-		objectFit: "fill",
-		width: "350px",
+
 		[theme.breakpoints.down("md")]: {
-			height: "200px",
-			//objectFit: "fill",
+			height: "150px",
+			width: "130px",
+			//objectFit: "fill",	
+			//border: "1px solid black"
 		},
 		[theme.breakpoints.up("md")]: {
+			height: "350px",
+			objectFit: "fill",
+			width: "350px",
 			//paddingTop: "8%",
 			margin: ".5rem",
+		
 		},
 	},
 }));

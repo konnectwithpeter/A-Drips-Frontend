@@ -53,10 +53,19 @@ let useStyles = makeStyles((theme) => ({
 		width: "100%",
 		[theme.breakpoints.down("md")]: {
 			maxWidth: "100%",
-			marginTop:"2rem",
+			marginTop: "2rem",
 		},
 		[theme.breakpoints.up("md")]: {
 			width: "100%",
+		},
+	},
+	product__image: {
+		width: "auto",
+		height: 150,
+		[theme.breakpoints.down("md")]: {
+			width: 100,
+			height: 100,
+			margin: "0 auto",
 		},
 	},
 }));
@@ -143,7 +152,7 @@ const CheckoutCart = () => {
 							component={Link}
 							to={"/store"}
 						>
-							<ArrowBackRounded fontSize="inherit"/>
+							<ArrowBackRounded fontSize="inherit" />
 							Continue Shopping
 						</Typography>
 					</div>
@@ -159,6 +168,7 @@ const CheckoutCart = () => {
 									flexShrink: 3,
 									width: "100%",
 									marginBottom: "2rem",
+									alignItems: "center",
 								}}
 								elevation={1}
 							>
@@ -173,11 +183,7 @@ const CheckoutCart = () => {
 								>
 									<CardMedia
 										component="img"
-										sx={{
-											width: "auto",
-											height: 150,
-											
-										}}
+										className={classes.product__image}
 										src={
 											item.image1.slice(0, 4) === "http"
 												? `${item.image1}`
@@ -224,7 +230,12 @@ const CheckoutCart = () => {
 													}}
 													size="small"
 													label={
-														<Typography variant="subtitle2">
+														<Typography
+															style={{
+																fontSize:
+																	"12px",
+															}}
+														>
 															@
 															{item.price.toLocaleString()}
 															<sup
@@ -378,7 +389,14 @@ const CheckoutCart = () => {
 							component="div"
 							style={{ justifyContent: "space-between" }}
 						>
-							<Alert variant="filled" severity="info">
+							<Alert
+								variant="filled"
+								severity="info"
+								sx={{
+									backgroundColor: "transparent",
+									color: "black",
+								}}
+							>
 								<AlertTitle>NB</AlertTitle>
 								Please note that the carriage is not yet
 								included. It will be added after the shipping

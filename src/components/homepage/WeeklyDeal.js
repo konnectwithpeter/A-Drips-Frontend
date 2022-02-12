@@ -4,21 +4,26 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import TimeStamp from "react-timestamp";
 import ProductsContext from "../../context/ProductsContext";
+import "./styles.css";
 
 let useStyles = makeStyles((theme) => ({
 	container: {
 		color: "black",
 		maxWidth: "50rem",
+		display: "flex",
 		[theme.breakpoints.up("md")]: {
 			backgroundColor: "transparent",
 			margin: "0 auto",
+			marginTop: "5rem",
 		},
 		[theme.breakpoints.down("md")]: {
+			border: "2px solid rgb(0,0,0, 0.05555)",
 			marginTop: "1rem",
 			maxWidth: "100%",
+			flexDirection: "column",
+			backgroundColor: "transparent",
 		},
 		padding: "1rem",
-		display: "flex",
 		maxHeight: "fit-content",
 	},
 
@@ -27,6 +32,18 @@ let useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 		justifyContent: "space-between",
 		width: "50%",
+		[theme.breakpoints.down("md")]: {
+			width: "100%",
+			//border: "1px solid black",
+			justifyContent: "center",
+			textAlign: "center",
+			alignItems: "center",
+			gap: ".5rem",
+		},
+		[theme.breakpoints.up("md")]: {
+			//gap: "1.5rem",
+			justifyContent: "space-around",
+		},
 	},
 
 	image__box: {
@@ -36,13 +53,51 @@ let useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		justifyContent: "center",
 		position: "relative",
+		[theme.breakpoints.down("md")]: {
+			width: "0%",
+			display: "none",
+		},
 	},
-
+	image: {
+		[theme.breakpoints.down("md")]: {
+			height: "auto",
+			width: "180px",
+			objectFit: "cover",
+		},
+		[theme.breakpoints.up("md")]: {
+			height: "auto",
+			width: "250px",
+			objectFit: "cover",
+		},
+	},
+	image__small: {
+		width: "100%",
+		maxWidth: "200px",
+		height: "auto",
+		maxHeight: "200px",
+		objectFit: "cover",
+		display: "flex",
+		margin: "0 auto",
+	},
+	container__small__image: {
+		[theme.breakpoints.up("md")]: {
+			display: "none",
+		},
+	},
 	text__1: {
 		fontSize: "20px",
 		fontWeight: "light-bold",
+		[theme.breakpoints.down("md")]: {
+			display: "none",
+		},
 	},
-
+	text__3: {
+		fontSize: "20px",
+		fontWeight: "light-bold",
+		[theme.breakpoints.up("md")]: {
+			display: "none",
+		},
+	},
 	text__2: { fontSize: "13px", fontWeight: "light-bold" },
 	timer: {
 		color: "black",
@@ -73,6 +128,56 @@ const WeeklyDeal = () => {
 		deals[0] !== undefined &&
 		dealProduct !== undefined && (
 			<Box className={classes.container}>
+				<Typography className={classes.text__3}>
+					{deals[0].title}
+				</Typography>
+				<Box
+					className={classes.container__small__image}
+					style={{ position: "relative" }}
+				>
+					<img
+						src={dealProduct.image1}
+						alt={dealProduct.name}
+						className={classes.image__small}
+					/>
+					{dealProduct.discount > 0 && (
+						<>
+							<Typography
+								component="div"
+								style={{
+									display: "flex",
+									alignItems: "center",
+									fontSize: "20px",
+								}}
+								className={classes.discount}
+							>
+								<Typography
+									style={{
+										fontSize: "14px !important",
+										marginRight: "6px",
+									}}
+								>
+									<strike>
+										{Math.round(
+											dealProduct.price /
+												(1 - dealProduct.discount / 100)
+										).toLocaleString()}
+									</strike>
+								</Typography>
+								<Typography
+									style={{
+										fontSize: "20px",
+										fontWeight: "light-bold",
+									}}
+								>
+									{dealProduct.price.toLocaleString()}
+									<sup style={{ fontSize: "12px" }}>Ksh</sup>
+								</Typography>
+								({Math.round(dealProduct.discount)}% OFF)
+							</Typography>
+						</>
+					)}
+				</Box>
 				<Box className={classes.text__box}>
 					<Typography className={classes.text__1}>
 						{deals[0].title}
@@ -83,7 +188,7 @@ const WeeklyDeal = () => {
 					>
 						{deals[0].content}
 					</Typography>
-					<Typography style={{ fontStyle: "italic" }}>
+					<Typography style={{ fontStyle: "italic bold" }}>
 						Expiring <TimeStamp relative date={deals[0].expire} />
 					</Typography>
 					<Fab
@@ -91,6 +196,7 @@ const WeeklyDeal = () => {
 						variant="extended"
 						//color="primary"
 						size="medium"
+						id="pulsate-bck"
 						sx={{
 							backgroundColor: "transparent",
 							border: "1px solid black",
@@ -103,18 +209,14 @@ const WeeklyDeal = () => {
 
 						//onClick={() => handleOnClick()}
 					>
-						Shop Now
+						Grab it today
 					</Fab>
 				</Box>
 				<Box className={classes.image__box}>
 					<img
 						src={dealProduct.image1}
 						alt={dealProduct.name}
-						style={{
-							width: "200px",
-							height: "200px",
-							objectFit:"cover"
-						}}
+						className={classes.image}
 					/>
 					{dealProduct.discount > 0 && (
 						<>
@@ -122,7 +224,7 @@ const WeeklyDeal = () => {
 								component="div"
 								className={classes.discount}
 							>
-								{dealProduct.discount}% OFF
+								{Math.round(dealProduct.discount)}% OFF
 							</Typography>
 							<div
 								style={{
@@ -130,7 +232,12 @@ const WeeklyDeal = () => {
 									alignItems: "center",
 								}}
 							>
-								<Typography style={{ fontSize: "12px", marginRight: "10px"}}>
+								<Typography
+									style={{
+										fontSize: "12px",
+										marginRight: "10px",
+									}}
+								>
 									<strike>
 										{Math.round(
 											dealProduct.price /

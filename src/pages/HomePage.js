@@ -1,12 +1,13 @@
 import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import TawkTo from "tawkto-react";
-import RiskReducers from "../components/homepage/RiskReducers";
 import Categories from "../components/homepage/Categories";
 import FeaturedProducts from "../components/homepage/FeaturedProducts";
 import Footer from "../components/homepage/Footer";
 import Hero from "../components/homepage/Hero";
 import RecentArrivals from "../components/homepage/RecentArrivals";
+import RequestForm from "../components/homepage/RequestForm";
+import RiskReducers from "../components/homepage/RiskReducers";
 import Testimonials from "../components/homepage/Testimonials";
 import WeeklyDeal from "../components/homepage/WeeklyDeal";
 
@@ -26,7 +27,6 @@ const HomePage = () => {
 	// Direct Chat Link
 	// https://tawk.to/chat/tawkToPropertyId/tawkToKey
 	//https://tawk.to/chat/61f3c0ec9bd1f31184d9c696/1fqg2j76q
-	
 
 	const tawkId = "1fqg2j76q";
 
@@ -50,10 +50,11 @@ const HomePage = () => {
 			<Hero setLandScreenLoaded={setLandScreenLoaded} />
 			{landScreenLoaded && (
 				<>
-					<WeeklyDeal />
 					<Categories />
+					<WeeklyDeal />
 					<FeaturedProducts />
 					<RecentArrivals />
+					<RequestForm />
 					<RiskReducers />
 					<Testimonials />
 					<div style={{ marginTop: "3em" }}>

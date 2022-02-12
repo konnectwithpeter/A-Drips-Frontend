@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import APIContext from "./APIContext";
@@ -17,22 +17,6 @@ export const ProductsProvider = ({ children }) => {
 	let [deals, setDeals] = useState([]);
 	let [hero, setHero] = useState([]);
 
-	let getProducts = async () => {
-		let response = await axios.get(`${API_URL}api/shop/products/?all`);
-		let allProducts = await response.data;
-		setProducts(allProducts);
-		setLoading(false);
-	};
-	let getCategories = async () => {
-		let response = await axios.get(`${API_URL}api/shop/categories/`);
-		setCategories(response.data);
-	};
-
-	let getReviews = async () => {
-		const response = await axios.get(`${API_URL}api/service-reviews/`);
-		setReviews(response.data);
-	};
-
 	let getHero = async () => {
 		try {
 			let res = await axios.get(`${API_URL}api/shop/landing_text/`);
@@ -42,6 +26,11 @@ export const ProductsProvider = ({ children }) => {
 		}
 	};
 
+	let getCategories = async () => {
+		let response = await axios.get(`${API_URL}api/shop/categories/`);
+		setCategories(response.data);
+	};
+
 	let getBanners = async () => {
 		try {
 			let res = await axios.get(`${API_URL}api/shop/deals/`);
@@ -49,6 +38,18 @@ export const ProductsProvider = ({ children }) => {
 		} catch (e) {
 			setDeals([]);
 		}
+	};
+
+	let getProducts = async () => {
+		let response = await axios.get(`${API_URL}api/shop/products/?all`);
+		let allProducts = await response.data;
+		setProducts(allProducts);
+		setLoading(false);
+	};
+
+	let getReviews = async () => {
+		const response = await axios.get(`${API_URL}api/service-reviews/`);
+		setReviews(response.data);
 	};
 
 	//console.log(`${API_URL}${banner.image.slice(1)}`)

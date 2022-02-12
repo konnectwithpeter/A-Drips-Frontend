@@ -252,7 +252,7 @@ const ProductItem = ({ product, imageLoading, reviews }) => {
 											</div>
 
 											<Typography style={{}}>
-												{product.discount}% OFF
+												{Math.round(product.discount)}% OFF
 											</Typography>
 										</div>
 									) : (

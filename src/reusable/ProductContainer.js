@@ -43,7 +43,6 @@ let useStyles = makeStyles((theme) => ({
 		height: "auto",
 		width: "auto",
 		margin: "auto",
-		height: "auto",
 		objectFit: "cover",
 		maxWidth: "100%",
 		[theme.breakpoints.down("md")]: {

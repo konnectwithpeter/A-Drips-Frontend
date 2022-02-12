@@ -131,8 +131,6 @@ const LoginForm = (props) => {
 
 	const handleLogin = async () => {
 		await loginUser(values);
-		console.log(loginError)
-		
 	};
 
 	return (
